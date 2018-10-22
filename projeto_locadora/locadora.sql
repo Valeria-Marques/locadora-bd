@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 19-Out-2018 às 14:00
+-- Generation Time: 22-Out-2018 às 23:44
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -21,6 +21,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `locadora`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `aluguel`
+--
+
+CREATE TABLE `aluguel` (
+  `idaluguel` int(11) NOT NULL,
+  `iddvd` int(11) NOT NULL,
+  `idcliente` int(11) NOT NULL,
+  `hora_aluguel` varchar(10) NOT NULL,
+  `data_aluguel` varchar(10) NOT NULL,
+  `data_devolucao` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -109,8 +124,23 @@ CREATE TABLE `funcionario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Extraindo dados da tabela `funcionario`
+--
+
+INSERT INTO `funcionario` (`idfuncionario`, `nome`, `login`, `senha`) VALUES
+(1, 'Administrador', 'qwe', '123');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `aluguel`
+--
+ALTER TABLE `aluguel`
+  ADD PRIMARY KEY (`idaluguel`),
+  ADD KEY `idcliente` (`idcliente`),
+  ADD KEY `iddvd` (`iddvd`);
 
 --
 -- Indexes for table `categoria`
@@ -156,6 +186,12 @@ ALTER TABLE `funcionario`
 --
 
 --
+-- AUTO_INCREMENT for table `aluguel`
+--
+ALTER TABLE `aluguel`
+  MODIFY `idaluguel` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
@@ -189,11 +225,18 @@ ALTER TABLE `filme`
 -- AUTO_INCREMENT for table `funcionario`
 --
 ALTER TABLE `funcionario`
-  MODIFY `idfuncionario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idfuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Limitadores para a tabela `aluguel`
+--
+ALTER TABLE `aluguel`
+  ADD CONSTRAINT `aluguel_ibfk_1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
+  ADD CONSTRAINT `aluguel_ibfk_2` FOREIGN KEY (`iddvd`) REFERENCES `dvd` (`iddvd`);
 
 --
 -- Limitadores para a tabela `dvd`
