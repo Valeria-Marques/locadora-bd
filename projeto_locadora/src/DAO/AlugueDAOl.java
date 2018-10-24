@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
-
-/**
- *
- * @author Secretaria-01
- */
 public class AlugueDAOl {
-    
+    private int cod;
+    private int coddvd;
+    private int codcliente;
+    private String fata_aluguel;
+    private String horario;
+    private String data_devolucao;
 }
