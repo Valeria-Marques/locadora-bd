@@ -8,7 +8,7 @@ public class Conexao {
       try{
           Class.forName("com.mysql.jdbc.Driver");
           String url = "jdbc:mysql://localhost/locadora";
-          con = DriverManager.getConnection(url,"root","123");
+          con = DriverManager.getConnection(url,"root","");
       }catch(Exception e){
           JOptionPane.showMessageDialog(null,"error na conexao com o banco",
                   "Video Locadora", JOptionPane.ERROR_MESSAGE);
