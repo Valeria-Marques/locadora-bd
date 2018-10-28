@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setTitle("Login");
     }
 
     /**
@@ -102,40 +103,37 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       Connection con = Conexao.AbrirConexao();
-       FuncionarioDAO sql = new FuncionarioDAO(con);
-       String login = tfUsuario.getText();
-       String senha = pfSenha.getText();
-       if(login.equalsIgnoreCase("") || senha.equalsIgnoreCase("")){
-           JOptionPane.showMessageDialog(null,"Nenhum campo pode estar vazio","video Locadora",JOptionPane.WARNING_MESSAGE);
-           tfUsuario.setText("");
-           pfSenha.setText("");
-       }else{
-           if(sql.Logar(login,senha) == true){
-               new Thread(){
-                   public void run(){
-                       for(int i=0; i<101; i++){
-                           jProgressBar1.setValue(i);
-                           try {
-                               Thread.sleep(10);
-                           } catch (Exception ex) {
-                               ex.getMessage();
-                           }
-                       }
-                       new Menu().setVisible(true);
-                       dispose();
-                   }
-               }.start();
-           }else{
-               JOptionPane.showMessageDialog(null,"Usuario ou Senha Invalido","Video locadora",JOptionPane.ERROR_MESSAGE);
-               tfUsuario.setText("");
-               pfSenha.setText("");
-           }
-       }
+         Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO sql = new FuncionarioDAO(con);
+        String login = tfUsuario.getText();
+        String senha = pfSenha.getText();
+        if (login.equalsIgnoreCase("") || senha.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode ficar vazio.", "Video Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (sql.Logar(login, senha) == true) {
+                new Thread() {
+                    public void run() {
+                        for (int i = 0; i < 101; i++) {
+                            jProgressBar1.setValue(i);
+                            try {
+                                Thread.sleep(35);
+                            } catch (Exception e) {
+                                e.getMessage();
+                            }
+                        }
+                        new Menu().setVisible(true);
+                        dispose();
+                    }
+                }
+                        .start();
+            }
+
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       System.exit(0);
+       dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

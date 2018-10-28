@@ -1,21 +1,21 @@
 package Visao.Consultar;
 
-import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
 import DAO.Conexao;
-import Modelo.Categoria;
+import Modelo.Classificacao;
 import Principal.Menu;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultarCategoria extends javax.swing.JFrame {
+public class ConsultarClassificacao extends javax.swing.JFrame {
 
-    public ConsultarCategoria() {
+    public ConsultarClassificacao() {
         initComponents();
         setLocationRelativeTo(this);
         setResizable(false);
-        setTitle("Consultar Categoria");
+        setTitle("Consultar Classificação");
     }
 
     
@@ -27,6 +27,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         WPesquisaNome = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         WPesquisaCodigo = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
@@ -34,11 +35,17 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         WTabela = new javax.swing.JTable();
         WVoltar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Pesquisar/Nome:");
+
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Pesquisar/Código:");
 
@@ -67,7 +74,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome"
+                "Código", "Nome", "Preço"
             }
         ));
         jScrollPane1.setViewportView(WTabela);
@@ -76,13 +83,6 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         WVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 WVoltarActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("OK");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -100,15 +100,15 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(WTodos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(WVoltar)))
@@ -123,14 +123,14 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2)
-                        .addComponent(WTodos)
-                        .addComponent(WVoltar))
+                        .addComponent(WVoltar)
+                        .addComponent(WTodos))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -150,25 +150,25 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void WPesquisaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WPesquisaCodigoActionPerformed
-       
+
     }//GEN-LAST:event_WPesquisaCodigoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
-        
+       
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
-        
+       
     }//GEN-LAST:event_WVoltarActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -184,13 +184,13 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarClassificacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarClassificacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarClassificacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultarClassificacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -200,7 +200,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConsultarCategoria().setVisible(true);
+                new ConsultarClassificacao().setVisible(true);
             }
         });
     }
@@ -211,8 +211,8 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     private javax.swing.JTable WTabela;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
