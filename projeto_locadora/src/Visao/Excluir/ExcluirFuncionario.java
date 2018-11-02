@@ -183,7 +183,8 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_WComboFuncionarioActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        
+ new Menu().setVisible(true);
+        dispose();        
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed

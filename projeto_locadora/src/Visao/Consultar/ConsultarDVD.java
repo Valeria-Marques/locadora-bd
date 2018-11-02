@@ -3,6 +3,7 @@ package Visao.Consultar;
 import DAO.Conexao;
 import DAO.DVDDAO;
 import Modelo.DVD;
+import Principal.Menu;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,11 @@ public class ConsultarDVD extends javax.swing.JFrame {
 
         WVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         WVoltar.setText("VOLTAR");
+        WVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,6 +167,11 @@ public class ConsultarDVD extends javax.swing.JFrame {
     private void WPesquisaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WPesquisaCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_WPesquisaCodigoActionPerformed
+
+    private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
+        new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_WVoltarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

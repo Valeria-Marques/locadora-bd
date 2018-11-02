@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setSize(377,340);
         setTitle("Login");
     }
 
@@ -96,14 +97,18 @@ public class Login extends javax.swing.JFrame {
         jButton2.setBounds(90, 210, 70, 30);
         getContentPane().add(pfSenha);
         pfSenha.setBounds(100, 160, 240, 30);
+
+        jProgressBar1.setForeground(new java.awt.Color(0, 0, 255));
         getContentPane().add(jProgressBar1);
-        jProgressBar1.setBounds(30, 260, 310, 10);
+        jProgressBar1.setBounds(30, 260, 310, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         Connection con = Conexao.AbrirConexao();
+
+        
+        Connection con = Conexao.AbrirConexao();
         FuncionarioDAO sql = new FuncionarioDAO(con);
         String login = tfUsuario.getText();
         String senha = pfSenha.getText();
@@ -127,6 +132,11 @@ public class Login extends javax.swing.JFrame {
                     }
                 }
                         .start();
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuário/Senha Incorreto!.", "Video Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+                tfUsuario.setText("");
+                pfSenha.setText("");
             }
 
         }

@@ -1,10 +1,19 @@
 package Modelo;
 public class DVD {
     private int codigo;
-    private int cod_filme;
+    private int CodigoFilme;
     private String situacao;
     private double preco;
-    private String data_compra;
+    private String DataCompra;
+    private int FCodigo;
+
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -14,12 +23,12 @@ public class DVD {
         this.codigo = codigo;
     }
 
-    public int getCod_filme() {
-        return cod_filme;
+    public int getCodigoFilme() {
+        return CodigoFilme;
     }
 
-    public void setCod_filme(int cod_filme) {
-        this.cod_filme = cod_filme;
+    public void setCodigoFilme(int cod_filme) {
+        this.CodigoFilme = CodigoFilme;
     }
 
     public String getSituacao() {
@@ -38,12 +47,12 @@ public class DVD {
         this.preco = preco;
     }
 
-    public String getData_compra() {
-        return data_compra;
+    public String getDataCompra() {
+        return DataCompra;
     }
 
-    public void setData_compra(String data_compra) {
-        this.data_compra = data_compra;
+    public void setDataCompra(String data_compra) {
+        this.DataCompra = DataCompra;
     }
     
 }

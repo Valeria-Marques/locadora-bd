@@ -13,8 +13,7 @@ public class ExcluirDVD extends javax.swing.JFrame {
 
     public ExcluirDVD() {
         initComponents();
-        setLocationRelativeTo(this);
-        setResizable(false);
+        setSize(500,290);
         setTitle("Deletar DVD");
     }
     @SuppressWarnings("unchecked")

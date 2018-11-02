@@ -3,9 +3,10 @@ public class Aluguel {
     private int cod;
     private int coddvd;
     private int codcliente;
-    private String data_aluguel;
+    private String DataAluguel;
     private String horario;
-    private String data_devolucao;
+    private String DataDevolucao;
+    private int FCodigo;
 
     public int getCod() {
         return cod;
@@ -27,16 +28,24 @@ public class Aluguel {
         return codcliente;
     }
 
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
+
     public void setCodcliente(int codcliente) {
         this.codcliente = codcliente;
     }
 
-    public String getData_aluguel() {
-        return data_aluguel;
+    public String getDataAluguel() {
+        return DataAluguel;
     }
 
-    public void setData_aluguel(String data_aluguel) {
-        this.data_aluguel = data_aluguel;
+    public void setDataAluguel(String data_aluguel) {
+        this.DataAluguel = DataAluguel;
     }
 
     public String getHorario() {
@@ -47,12 +56,12 @@ public class Aluguel {
         this.horario = horario;
     }
 
-    public String getData_devolucao() {
-        return data_devolucao;
+    public String getDataDevolucao() {
+        return DataDevolucao;
     }
 
-    public void setData_devolucao(String data_devolucao) {
-        this.data_devolucao = data_devolucao;
+    public void setDataDevolucao(String data_devolucao) {
+        this.DataDevolucao = DataDevolucao;
     }
     
 }

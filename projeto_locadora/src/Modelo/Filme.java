@@ -4,9 +4,18 @@ public class Filme {
     private String titulo;
     private int ano;
     private String duracao;
-    private int cod_categoria;
-    private int cod_classificacao;
+    private int CodigoCategoria;
+    private int CodigoClassificacao;
     private String capa;
+    private int FCodigo;
+
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -40,20 +49,20 @@ public class Filme {
         this.duracao = duracao;
     }
 
-    public int getCod_categoria() {
-        return cod_categoria;
+    public int getCodigoCategoria() {
+        return CodigoCategoria;
     }
 
-    public void setCod_categoria(int cod_categoria) {
-        this.cod_categoria = cod_categoria;
+    public void setCodigoCategoria(int cod_categoria) {
+        this.CodigoCategoria = CodigoCategoria;
     }
 
-    public int getCod_classificacao() {
-        return cod_classificacao;
+    public int getCodigoClassificacao() {
+        return CodigoClassificacao;
     }
 
-    public void setCod_classificacao(int cod_classificacao) {
-        this.cod_classificacao = cod_classificacao;
+    public void setCodigoClassificacao(int cod_classificacao) {
+        this.CodigoClassificacao = CodigoClassificacao;
     }
 
     public String getCapa() {

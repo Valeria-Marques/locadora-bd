@@ -11,6 +11,15 @@ public class Cliente {
      private String Rua;
      private int Numero;
      private String CEP;
+     private int FCodigo;
+
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
 
     public int getCodigo() {
         return Codigo;

@@ -3,6 +3,15 @@ public class Classificacao {
     private int codigo;
     private String nome;
     private double preco;
+    private int FCodigo;
+
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
 
     public int getCodigo() {
         return codigo;

@@ -392,7 +392,8 @@ public class AlterarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-       
+ new Menu().setVisible(true);
+        dispose();       
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void WCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WCodigoActionPerformed

@@ -13,8 +13,7 @@ public class AlterarDVD extends javax.swing.JFrame {
 
     public AlterarDVD() {
         initComponents();
-        setLocationRelativeTo(this);
-        setResizable(false);
+        setSize(615,435);
         setTitle("Alterar DVD");
     }
 
@@ -223,7 +222,8 @@ public class AlterarDVD extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
+ new Menu().setVisible(true);
+        dispose();       
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

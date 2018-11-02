@@ -5,6 +5,15 @@ public class Funcionario {
     private String nome;
     private String login;
     private String senha;
+    private int FCodigo;
+
+    public int getFCodigo() {
+        return FCodigo;
+    }
+
+    public void setFCodigo(int FCodigo) {
+        this.FCodigo = FCodigo;
+    }
 
     public int getCod() {
         return cod;

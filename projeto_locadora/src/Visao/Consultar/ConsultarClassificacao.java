@@ -175,7 +175,8 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
-       
+ new Menu().setVisible(true);
+        dispose();       
     }//GEN-LAST:event_WVoltarActionPerformed
 
     public static void main(String args[]) {

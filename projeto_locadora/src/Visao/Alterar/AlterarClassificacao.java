@@ -13,8 +13,8 @@ public class AlterarClassificacao extends javax.swing.JFrame {
 
     public AlterarClassificacao() {
         initComponents();
-        setLocationRelativeTo(this);
-        setResizable(false);
+        setLocationRelativeTo(null);
+        setSize(736, 380);
         setTitle("Alterar Classificação");
     }
 
@@ -57,7 +57,7 @@ public class AlterarClassificacao extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(249, 249, 249)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +210,8 @@ public class AlterarClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_limparActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-       
+ new Menu().setVisible(true);
+        dispose();       
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed

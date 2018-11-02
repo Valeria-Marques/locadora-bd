@@ -173,7 +173,8 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
-        
+ new Menu().setVisible(true);
+        dispose();        
     }//GEN-LAST:event_WVoltarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

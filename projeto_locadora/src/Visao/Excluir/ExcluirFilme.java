@@ -208,7 +208,8 @@ public class ExcluirFilme extends javax.swing.JFrame {
     }//GEN-LAST:event_WComboFilmeActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-
+ new Menu().setVisible(true);
+        dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed

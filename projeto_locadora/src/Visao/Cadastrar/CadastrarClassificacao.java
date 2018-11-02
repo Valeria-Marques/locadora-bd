@@ -5,6 +5,8 @@
  */
 package Visao.Cadastrar;
 
+import Principal.Menu;
+
 /**
  *
  * @author Secretaria-01
@@ -16,6 +18,8 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
      */
     public CadastrarClassificacao() {
         initComponents();
+        setSize(490,320);
+        setTitle("Cadastrar Classificação");
     }
 
     /**
@@ -130,6 +134,11 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton4.setText("Limpar");
@@ -166,6 +175,11 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        new Menu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
