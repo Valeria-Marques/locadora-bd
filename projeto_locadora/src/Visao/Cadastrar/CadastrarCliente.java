@@ -30,7 +30,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         setSize(545,481);
         setTitle("Cadastrar Cliente");
     }
-private void ID() {
+   private void ID() {
         Connection con = Conexao.AbrirConexao();
         ClienteDAO sql = new ClienteDAO(con);
         List<Cliente> lista = new ArrayList<>();
@@ -336,7 +336,7 @@ private void ID() {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-          String nome = WNome.getText();
+        String nome = WNome.getText();
         String nascimento = WDataNascimento.getText();
         String CEP = WCEP.getText();
         String rua = WRua.getText();

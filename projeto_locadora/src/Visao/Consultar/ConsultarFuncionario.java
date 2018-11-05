@@ -16,6 +16,27 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(this);
         setTitle("Consultar Funcionário");
+        AtualizaTable();
+    }
+    private void AtualizaTable(){
+        Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO bd =  new FuncionarioDAO(con);
+        List<Funcionario> lista = new ArrayList();
+        lista = bd.ListarFuncionario();
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Funcionario tab : lista){
+            tbm.addRow(new String[1]);
+            jTable1.setValueAt(tab.getCod(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            jTable1.setValueAt(tab.getLogin(), i, 2);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -30,7 +51,7 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         WTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        WTabela = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         WVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,8 +92,8 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
             }
         });
 
-        WTabela.setBackground(new java.awt.Color(204, 204, 204));
-        WTabela.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setBackground(new java.awt.Color(204, 204, 204));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -80,7 +101,7 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
                 "Código", "Nome", "Login"
             }
         ));
-        jScrollPane1.setViewportView(WTabela);
+        jScrollPane1.setViewportView(jTable1);
 
         WVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         WVoltar.setText("VOLTAR");
@@ -215,7 +236,6 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField WPesquisaCodigo;
     private javax.swing.JTextField WPesquisaNome;
-    private javax.swing.JTable WTabela;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;
     private javax.swing.JButton jButton1;
@@ -224,5 +244,6 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
