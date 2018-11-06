@@ -216,7 +216,7 @@ public class FuncionarioDAO extends ExecuteSQL{
         return Resultado;
     }
 
-    public List<Funcionario> CapturarFuncionaro(int cod) {
+    public List<Funcionario> CapturarFuncionario(int cod) {
         String sql = "select * from funcionario where idfuncionario = " + cod + "";
         List<Funcionario> lista = new ArrayList<>();
         try {

@@ -55,13 +55,13 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel1" pref="121" max="32767" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="WPesquisaNome" min="-2" pref="146" max="-2" attributes="0"/>
+                                  <Component id="Nome" min="-2" pref="146" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton1" min="-2" pref="40" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" pref="132" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="WPesquisaCodigo" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="Cod" min="-2" pref="157" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton2" min="-2" pref="44" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -85,10 +85,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="WPesquisaCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Cod" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="WPesquisaNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Nome" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel1" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
@@ -113,7 +113,7 @@
             <Property name="text" type="java.lang.String" value="Pesquisar/Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="WPesquisaNome">
+        <Component class="javax.swing.JTextField" name="Nome">
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
@@ -133,9 +133,9 @@
             <Property name="text" type="java.lang.String" value="Pesquisar/C&#xf3;digo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="WPesquisaCodigo">
+        <Component class="javax.swing.JTextField" name="Cod">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WPesquisaCodigoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CodActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">

@@ -24,19 +24,37 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         CategoriaDAO bd = new CategoriaDAO(con);
         List<Categoria> lista = new ArrayList<>();
         lista = bd.ListarCategoria();
-        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
         while (tbm.getRowCount() > 0) {
             tbm.removeRow(0);
         }
         int i = 0;
         for (Categoria tab : lista) {
             tbm.addRow(new String[i]);
-            WTabela.setValueAt(tab.getCodigo(), i, 0);
-            WTabela.setValueAt(tab.getNome(), i, 1);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getNome(), i, 1);
             i++;
         }
         Conexao.FecharConexao(con);
     }
+     public void BuscarNome(){
+          Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd =  new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList();
+        lista = bd.PesquisarNomeCategoria(Nome.getText());
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Categoria tab : lista){
+            tbm.addRow(new String[1]);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getNome(), i, 1);
+            i++;
+        }
+        Conexao.FecharConexao(con); 
+     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -44,13 +62,13 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        WPesquisaNome = new javax.swing.JTextField();
+        Nome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         WPesquisaCodigo = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         WTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        WTabela = new javax.swing.JTable();
+        Tabela = new javax.swing.JTable();
         WVoltar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -85,8 +103,8 @@ public class ConsultarCategoria extends javax.swing.JFrame {
             }
         });
 
-        WTabela.setBackground(new java.awt.Color(204, 204, 204));
-        WTabela.setModel(new javax.swing.table.DefaultTableModel(
+        Tabela.setBackground(new java.awt.Color(204, 204, 204));
+        Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -94,7 +112,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 "Código", "Nome"
             }
         ));
-        jScrollPane1.setViewportView(WTabela);
+        jScrollPane1.setViewportView(Tabela);
 
         WVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         WVoltar.setText("VOLTAR");
@@ -126,7 +144,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel1)
                                 .addGap(9, 9, 9)
-                                .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
@@ -150,7 +168,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton3)
                         .addComponent(jLabel2)
                         .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,15 +206,15 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         CategoriaDAO sql = new CategoriaDAO(con);
         List<Categoria> lista = new ArrayList<>();
         lista = sql.PesquisarCodigoCategoria(codigo);
-        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
         while (tbm.getRowCount() > 0) {
             tbm.removeRow(0);
         }
         int i = 0;
         for (Categoria tab : lista) {      
             tbm.addRow(new String[i]);
-            WTabela.setValueAt(tab.getCodigo(), i, 0);
-            WTabela.setValueAt(tab.getNome(), i, 1);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getNome(), i, 1);
             i++; 
             WPesquisaCodigo.setText("");          
         }
@@ -205,7 +223,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
         AtualizaTable();
-        WPesquisaNome.setText("");
+        Nome.setText("");
         WPesquisaCodigo.setText("");        
     }//GEN-LAST:event_WTodosActionPerformed
 
@@ -215,25 +233,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_WVoltarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Connection con = Conexao.AbrirConexao();
-        CategoriaDAO bd = new CategoriaDAO(con);
-        List<Categoria> lista = new ArrayList<>();
-        String nome = WPesquisaNome.getText();
-        lista = bd.PesquisarNomeCategoria(nome);
-        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
-        while (tbm.getRowCount() > 0) {
-            tbm.removeRow(0);
-        }
-        int i = 0;
-        for (Categoria tab : lista) {
-            tbm.addRow(new String[i]);
-            WTabela.setValueAt(tab.getCodigo(), i, 0);
-            WTabela.setValueAt(tab.getNome(), i, 1);
-            i++;
-            WPesquisaNome.setText("");
-            WPesquisaCodigo.setText("");
-        }
-        Conexao.FecharConexao(con);    
+      BuscarNome();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
@@ -272,9 +272,9 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Nome;
+    private javax.swing.JTable Tabela;
     private javax.swing.JTextField WPesquisaCodigo;
-    private javax.swing.JTextField WPesquisaNome;
-    private javax.swing.JTable WTabela;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;
     private javax.swing.JButton jButton2;

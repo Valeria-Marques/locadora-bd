@@ -55,7 +55,7 @@
                                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                  <Component id="WPesquisaNome" min="-2" pref="156" max="-2" attributes="0"/>
+                                  <Component id="Nome" min="-2" pref="156" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Component id="jButton3" min="-2" pref="39" max="-2" attributes="0"/>
                                   <EmptySpace pref="113" max="32767" attributes="0"/>
@@ -87,7 +87,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="WPesquisaNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Nome" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="WPesquisaCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -115,7 +115,7 @@
             <Property name="text" type="java.lang.String" value="Pesquisar/Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="WPesquisaNome">
+        <Component class="javax.swing.JTextField" name="Nome">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -158,7 +158,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="WTabela">
+            <Component class="javax.swing.JTable" name="Tabela">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>

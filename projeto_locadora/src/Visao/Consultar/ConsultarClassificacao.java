@@ -16,8 +16,27 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Consultar Classificação");
+        AtualizaTable();
     }
-
+ private void AtualizaTable() {
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO bd = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = bd.ListarClassificacao();
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Classificacao tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -159,7 +178,26 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+   Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO bd = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        String nome = WPesquisaNome.getText();
+        lista = bd.PesquisarNomeClassificacao(nome);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Classificacao tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            i++;
+            WPesquisaNome.setText("");
+            WPesquisaCodigo.setText("");
+        }
+        Conexao.FecharConexao(con);    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void WPesquisaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WPesquisaCodigoActionPerformed
@@ -167,11 +205,31 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_WPesquisaCodigoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+    String codigo = WPesquisaCodigo.getText();
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = sql.PesquisarCodigoClassificacao(codigo);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Classificacao tab : lista) {      
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            i++; 
+            WPesquisaCodigo.setText("");          
+        }
+        Conexao.FecharConexao(con);          
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
-       
+        AtualizaTable();
+        WPesquisaNome.setText("");
+        WPesquisaCodigo.setText(""); 
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed

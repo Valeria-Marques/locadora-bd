@@ -44,10 +44,10 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        WPesquisaNome = new javax.swing.JTextField();
+        Nome = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        WPesquisaCodigo = new javax.swing.JTextField();
+        Cod = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         WTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -71,9 +71,9 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Pesquisar/Código:");
 
-        WPesquisaCodigo.addActionListener(new java.awt.event.ActionListener() {
+        Cod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WPesquisaCodigoActionPerformed(evt);
+                CodActionPerformed(evt);
             }
         });
 
@@ -126,13 +126,13 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Cod, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19))
@@ -149,10 +149,10 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Cod, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2)
                         .addComponent(jButton1)
-                        .addComponent(WPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,19 +178,53 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+   Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO bd =  new FuncionarioDAO(con);
+        List<Funcionario> lista = new ArrayList();
+        lista = bd.PesquisarNomeFuncionario(Nome.getText());
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Funcionario tab : lista){
+            tbm.addRow(new String[1]);
+            jTable1.setValueAt(tab.getCod(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            jTable1.setValueAt(tab.getLogin(), i, 2);
+            i++;
+        }
+        Conexao.FecharConexao(con);        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void WPesquisaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WPesquisaCodigoActionPerformed
+    private void CodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CodActionPerformed
 
-    }//GEN-LAST:event_WPesquisaCodigoActionPerformed
+    }//GEN-LAST:event_CodActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+   Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO bd =  new FuncionarioDAO(con);
+        List<Funcionario> lista = new ArrayList();
+        lista = bd.PesquisarCodFuncionario(Cod.getText());
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Funcionario tab : lista){
+            tbm.addRow(new String[1]);
+            jTable1.setValueAt(tab.getCod(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            jTable1.setValueAt(tab.getLogin(), i, 2);
+            i++;
+        }
+        Conexao.FecharConexao(con);        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
-        
+      AtualizaTable();
+      Cod.setText("");
+      Nome.setText("");
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
@@ -234,8 +268,8 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField WPesquisaCodigo;
-    private javax.swing.JTextField WPesquisaNome;
+    private javax.swing.JTextField Cod;
+    private javax.swing.JTextField Nome;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;
     private javax.swing.JButton jButton1;

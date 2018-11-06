@@ -17,18 +17,26 @@ public class AlterarClassificacao extends javax.swing.JFrame {
         setSize(736, 380);
         setTitle("Alterar Classificação");
     }
-
-
+private void InserirDados(int cod) {
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = sql.CapturarClassificacao(cod);
+        for (Classificacao a : lista) {
+            Nome.setText("" + a.getNome());
+            Numero.setText("" + a.getCodigo());
+            Preco.setText("" + a.getPreco());
+        }
+        Conexao.FecharConexao(con);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        WCodigo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        WNumeroCategoria = new javax.swing.JTextField();
-        WNome = new javax.swing.JTextField();
-        WPreco = new javax.swing.JTextField();
+        Numero = new javax.swing.JTextField();
+        Nome = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         cancelar = new javax.swing.JButton();
         alterar = new javax.swing.JButton();
@@ -39,11 +47,11 @@ public class AlterarClassificacao extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        Codigo = new javax.swing.JTextField();
+        Preco = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-        getContentPane().add(WCodigo);
-        WCodigo.setBounds(143, 112, 320, 20);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -70,17 +78,13 @@ public class AlterarClassificacao extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 735, 80);
 
-        WNumeroCategoria.setEditable(false);
-        getContentPane().add(WNumeroCategoria);
-        WNumeroCategoria.setBounds(143, 140, 320, 20);
+        Numero.setEditable(false);
+        getContentPane().add(Numero);
+        Numero.setBounds(143, 130, 320, 30);
 
-        WNome.setToolTipText("");
-        getContentPane().add(WNome);
-        WNome.setBounds(143, 166, 320, 20);
-
-        WPreco.setToolTipText("");
-        getContentPane().add(WPreco);
-        WPreco.setBounds(143, 192, 320, 20);
+        Nome.setToolTipText("");
+        getContentPane().add(Nome);
+        Nome.setBounds(143, 166, 320, 30);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -136,7 +140,7 @@ public class AlterarClassificacao extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(0, 281, 735, 70);
+        jPanel3.setBounds(0, 270, 735, 70);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -160,53 +164,75 @@ public class AlterarClassificacao extends javax.swing.JFrame {
             }
         });
 
+        Preco.setToolTipText("");
+        Preco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrecoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 520, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125))
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel13)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(43, 43, 43)
                         .addComponent(jButton4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(0, 76, 740, 210);
+        jPanel4.setBounds(0, 76, 740, 190);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparActionPerformed
-       
+    Nome.setText("");
+    Numero.setText("");
+    Preco.setText("");
+    Codigo.setText("");
     }//GEN-LAST:event_limparActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -215,12 +241,53 @@ public class AlterarClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-      
+   String nome = Nome.getText();
+        String numero = Numero.getText();
+        String preco = Preco.getText();
+        if (nome.equals("") || numero.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Connection con = Conexao.AbrirConexao();
+            ClassificacaoDAO sql = new ClassificacaoDAO(con);
+            int num = Integer.parseInt(numero);
+            int pre = Integer.parseInt(preco);
+            Classificacao a = new Classificacao();
+            a.setCodigo(num);
+            a.setPreco(pre);
+            a.setNome(nome);
+            sql.AlterarClassificacao(a);
+            Conexao.FecharConexao(con);
+            Nome.setText("");
+            Numero.setText("");
+            Preco.setText("");
+            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+        }
+        dispose();       
+             
     }//GEN-LAST:event_alterarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+    String codigo = Codigo.getText();
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        int cod = Integer.parseInt(codigo);
+        if (sql.TestarClassificacao(cod) == false) {
+            JOptionPane.showMessageDialog(null, "O código não foi encontrado!", "Vidio Locadora", JOptionPane.WARNING_MESSAGE);
+            Conexao.FecharConexao(con);
+        }
+        if (codigo.equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe um código!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        Nome.setText("");
+        Numero.setText("");
+        Preco.setText("");
+        InserirDados(cod);   
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void PrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PrecoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -258,10 +325,10 @@ public class AlterarClassificacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField WCodigo;
-    private javax.swing.JTextField WNome;
-    private javax.swing.JTextField WNumeroCategoria;
-    private javax.swing.JTextField WPreco;
+    private javax.swing.JTextField Codigo;
+    private javax.swing.JTextField Nome;
+    private javax.swing.JTextField Numero;
+    private javax.swing.JTextField Preco;
     private javax.swing.JButton alterar;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton jButton4;

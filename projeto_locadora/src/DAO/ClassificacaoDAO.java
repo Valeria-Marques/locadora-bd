@@ -92,7 +92,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public List<Classificacao> ListarClassificacao() {
-        String sql = "SELECT idclassificacao, nome FROM classificacao";
+        String sql = "SELECT idclassificacao, nome, preco FROM classificacao";
         List<Classificacao> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -103,6 +103,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
                     Classificacao c = new Classificacao();
                     c.setCodigo(rs.getInt(1));
                     c.setNome(rs.getString(2));
+                    c.setPreco(rs.getInt(3));
                     lista.add(c);
                 }
                 return lista;
@@ -115,7 +116,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public List<Classificacao> PesquisarNomeClassificacao(String C) {
-        String sql = "SELECT idclassificacao, nome FROM classificacao WHERE nome LIKE'" + C + "%'";
+        String sql = "SELECT idclassificacao, nome, preco FROM classificacao WHERE nome LIKE'" + C + "%'";
         List<Classificacao> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -126,6 +127,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
                     Classificacao c = new Classificacao();
                     c.setCodigo(rs.getInt(1));
                     c.setNome(rs.getString(2));
+                    c.setPreco(rs.getInt(3));
                     lista.add(c);
                 }
                 return lista;
@@ -138,7 +140,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public List<Classificacao> PesquisarCodigoClassificacao(String cod) {
-        String sql = "SELECT idclassificacao, nome FROM classificacao WHERE idclassificacao LIKE'" + cod + "%'";
+        String sql = "SELECT idclassificacao, nome, preco FROM classificacao WHERE idclassificacao LIKE'" + cod + "%'";
         List<Classificacao> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -149,6 +151,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
                     Classificacao c = new Classificacao();
                     c.setCodigo(rs.getInt(1));
                     c.setNome(rs.getString(2));
+                    c.setPreco(rs.getInt(3));
                     lista.add(c);
                 }
                 return lista;
@@ -190,6 +193,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
                     Classificacao c = new Classificacao();
                     c.setCodigo(rs.getInt(1));
                     c.setNome(rs.getString(2));
+                    c.setPreco(rs.getInt(3));
                     lista.add(c);
                 }
                 return lista;
@@ -202,11 +206,12 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public String AlterarClassificacao(Classificacao c) {
-        String sql = "UPDATE classificacao SET nome = ? WHERE idclassificacao = ? ";
+        String sql = "UPDATE classificacao SET nome = ?, preco = ? WHERE idclassificacao = ? ";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, c.getNome());
             ps.setInt(2, c.getCodigo());
+            ps.setInt(3, (int) c.getPreco());
 
             if (ps.executeUpdate() > 0) {
                 return "Editado(a)!";

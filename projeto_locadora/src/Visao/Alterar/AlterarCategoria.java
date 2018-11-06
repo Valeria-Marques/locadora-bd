@@ -17,7 +17,7 @@ public class AlterarCategoria extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Alterar Categoria");
     }
-private void InserirDados(int cod) {
+  private void InserirDados(int cod) {
         Connection con = Conexao.AbrirConexao();
         CategoriaDAO sql = new CategoriaDAO(con);
         List<Categoria> lista = new ArrayList<>();
