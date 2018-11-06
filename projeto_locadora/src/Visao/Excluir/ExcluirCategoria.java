@@ -16,6 +16,18 @@ public class ExcluirCategoria extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Deletar Categoria");
+        AtualizarCombo();
+    }
+    private void AtualizarCombo(){
+    Connection con = Conexao.AbrirConexao();
+    CategoriaDAO sql = new CategoriaDAO(con);
+    List<Categoria> lista = new ArrayList<>();
+    lista =  sql.ListarComboCategoria();
+    ComboCategoria.addItem("");
+    for(Categoria c : lista){
+       ComboCategoria.addItem(c.getNome()); 
+    }
+    Conexao.FecharConexao(con);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -23,8 +35,8 @@ public class ExcluirCategoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        WIDCategoria = new javax.swing.JTextField();
-        WComboCategoria = new javax.swing.JComboBox<>();
+        IdCategoria = new javax.swing.JTextField();
+        ComboCategoria = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -38,14 +50,14 @@ public class ExcluirCategoria extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
-        WIDCategoria.setEnabled(false);
+        IdCategoria.setEnabled(false);
 
-        WComboCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WComboCategoria.setMaximumRowCount(100);
-        WComboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Categoria" }));
-        WComboCategoria.addActionListener(new java.awt.event.ActionListener() {
+        ComboCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboCategoria.setMaximumRowCount(100);
+        ComboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Categoria" }));
+        ComboCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WComboCategoriaActionPerformed(evt);
+                ComboCategoriaActionPerformed(evt);
             }
         });
 
@@ -120,9 +132,9 @@ public class ExcluirCategoria extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WIDCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(IdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(WComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,9 +143,9 @@ public class ExcluirCategoria extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(WIDCategoria)
+                    .addComponent(IdCategoria)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(WComboCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(ComboCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -152,9 +164,20 @@ public class ExcluirCategoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void WComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboCategoriaActionPerformed
-      
-    }//GEN-LAST:event_WComboCategoriaActionPerformed
+    private void ComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCategoriaActionPerformed
+       Connection con = Conexao.AbrirConexao();
+    CategoriaDAO sql = new CategoriaDAO(con);
+    List<Categoria> lista = new ArrayList<>();
+    String nome = ComboCategoria.getSelectedItem().toString();
+    
+    lista = sql.ConsultaCodigoCategoria(nome);
+    
+    for(Categoria c: lista){
+        int a = c.getCodigo();
+        IdCategoria.setText("" + a);    
+    }
+    Conexao.FecharConexao(con);  
+    }//GEN-LAST:event_ComboCategoriaActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
  new Menu().setVisible(true);
@@ -162,7 +185,28 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-      
+        String codigo = IdCategoria.getText();
+    String nome = ComboCategoria.getSelectedItem().toString();
+    
+    Connection con = Conexao.AbrirConexao();
+    CategoriaDAO sql = new CategoriaDAO(con);
+    Categoria a = new Categoria();
+    
+    if(nome.equals("")){
+        JOptionPane.showMessageDialog(null,"Nenhum Nome Selecionado","Video Locadora",JOptionPane.WARNING_MESSAGE);
+    }else{
+        int b = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir?"+"\n ("+codigo+")("+nome+")","Video Locadora"
+        ,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(b == 0){
+            int cod = Integer.parseInt(codigo);
+            a.setNome(nome);
+            a.setCodigo(cod);
+            sql.ExcluirCategoria(a);
+            Conexao.FecharConexao(con);
+            dispose();
+        }
+    }
+    new Menu().setVisible(true);
     }//GEN-LAST:event_deletarActionPerformed
     
     public static void main(String args[]) {
@@ -201,8 +245,8 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> WComboCategoria;
-    private javax.swing.JTextField WIDCategoria;
+    private javax.swing.JComboBox<String> ComboCategoria;
+    private javax.swing.JTextField IdCategoria;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton deletar;
     private javax.swing.JLabel jLabel1;

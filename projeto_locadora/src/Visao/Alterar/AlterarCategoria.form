@@ -181,9 +181,9 @@
                   </Group>
                   <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="WCodigo" pref="281" max="32767" attributes="0"/>
-                      <Component id="WNumeroCategoria" alignment="0" max="32767" attributes="0"/>
-                      <Component id="WNome" alignment="0" max="32767" attributes="0"/>
+                      <Component id="Codigo" pref="281" max="32767" attributes="0"/>
+                      <Component id="Numero" alignment="0" max="32767" attributes="0"/>
+                      <Component id="Nome" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton4" min="-2" pref="155" max="-2" attributes="0"/>
@@ -198,12 +198,12 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="WCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Codigo" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="WNumeroCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Numero" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -215,7 +215,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="WNome" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="Nome" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="65" max="32767" attributes="0"/>
               </Group>
@@ -223,7 +223,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="WCodigo">
+        <Component class="javax.swing.JTextField" name="Codigo">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
@@ -244,12 +244,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="WNumeroCategoria">
+        <Component class="javax.swing.JTextField" name="Numero">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WNumeroCategoriaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NumeroActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -268,7 +268,7 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="WNome">
+        <Component class="javax.swing.JTextField" name="Nome">
         </Component>
       </SubComponents>
     </Container>

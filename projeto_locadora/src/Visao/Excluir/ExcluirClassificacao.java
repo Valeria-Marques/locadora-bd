@@ -16,16 +16,27 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Deletar Classificação");
+        AtualizarCombo();
     }
-
+ private void AtualizarCombo(){
+    Connection con = Conexao.AbrirConexao();
+    ClassificacaoDAO sql = new ClassificacaoDAO(con);
+    List<Classificacao> lista = new ArrayList<>();
+    lista =  sql.ListarComboClassificacao();
+    ComboClassificacao.addItem("");
+    for(Classificacao c : lista){
+       ComboClassificacao.addItem(c.getNome()); 
+    }
+    Conexao.FecharConexao(con);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        WIDClassificacao = new javax.swing.JTextField();
-        WComboClassificacao = new javax.swing.JComboBox<>();
+        IdClassificacao = new javax.swing.JTextField();
+        ComboClassificacao = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -39,14 +50,14 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nome :");
 
-        WIDClassificacao.setEnabled(false);
+        IdClassificacao.setEnabled(false);
 
-        WComboClassificacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WComboClassificacao.setMaximumRowCount(100);
-        WComboClassificacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Classificação" }));
-        WComboClassificacao.addActionListener(new java.awt.event.ActionListener() {
+        ComboClassificacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboClassificacao.setMaximumRowCount(100);
+        ComboClassificacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Classificação" }));
+        ComboClassificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WComboClassificacaoActionPerformed(evt);
+                ComboClassificacaoActionPerformed(evt);
             }
         });
 
@@ -121,9 +132,9 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(WIDClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(IdClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WComboClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,8 +143,8 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(WIDClassificacao)
-                    .addComponent(WComboClassificacao, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(IdClassificacao)
+                    .addComponent(ComboClassificacao, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,9 +164,20 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void WComboClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboClassificacaoActionPerformed
-       
-    }//GEN-LAST:event_WComboClassificacaoActionPerformed
+    private void ComboClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboClassificacaoActionPerformed
+    Connection con = Conexao.AbrirConexao();
+    ClassificacaoDAO sql = new ClassificacaoDAO(con);
+    List<Classificacao> lista = new ArrayList<>();
+    String nome = ComboClassificacao.getSelectedItem().toString();
+    
+    lista = sql.ConsultaCodigoClassificacao(nome);
+    
+    for(Classificacao c: lista){
+        int a = c.getCodigo();
+        IdClassificacao.setText("" + a);    
+    }
+    Conexao.FecharConexao(con);  
+    }//GEN-LAST:event_ComboClassificacaoActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
  new Menu().setVisible(true);
@@ -163,7 +185,28 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-       
+        String codigo = IdClassificacao.getText();
+    String nome = ComboClassificacao.getSelectedItem().toString();
+    
+    Connection con = Conexao.AbrirConexao();
+    ClassificacaoDAO sql = new ClassificacaoDAO(con);
+    Classificacao a = new Classificacao();
+    
+    if(nome.equals("")){
+        JOptionPane.showMessageDialog(null,"Nenhum Nome Selecionado","Video Locadora",JOptionPane.WARNING_MESSAGE);
+    }else{
+        int b = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir?"+"\n ("+codigo+")("+nome+")","Video Locadora"
+        ,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(b == 0){
+            int cod = Integer.parseInt(codigo);
+            a.setNome(nome);
+            a.setCodigo(cod);
+            sql.ExcluirClassificacao(a);
+            Conexao.FecharConexao(con);
+            dispose();
+        }
+    }
+    new Menu().setVisible(true);
     }//GEN-LAST:event_deletarActionPerformed
 
     public static void main(String args[]) {
@@ -202,8 +245,8 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> WComboClassificacao;
-    private javax.swing.JTextField WIDClassificacao;
+    private javax.swing.JComboBox<String> ComboClassificacao;
+    private javax.swing.JTextField IdClassificacao;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton deletar;
     private javax.swing.JLabel jLabel1;

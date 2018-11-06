@@ -17,6 +17,18 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Deletar Funcionário");
+        AtualizarCombo();
+    }
+  private void AtualizarCombo(){
+    Connection con = Conexao.AbrirConexao();
+    FuncionarioDAO sql = new FuncionarioDAO(con);
+    List<Funcionario> lista = new ArrayList<>();
+    lista =  sql.ListarComboFuncionario();
+    ComboFuncionario.addItem("");
+    for(Funcionario c : lista){
+       ComboFuncionario.addItem(c.getNome()); 
+    }
+    Conexao.FecharConexao(con);
     }
 
 
@@ -28,8 +40,8 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        WIDFuncionario = new javax.swing.JTextField();
-        WComboFuncionario = new javax.swing.JComboBox<>();
+        IdFuncionario = new javax.swing.JTextField();
+        ComboFuncionario = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -63,15 +75,15 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
-        WIDFuncionario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WIDFuncionario.setEnabled(false);
+        IdFuncionario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        IdFuncionario.setEnabled(false);
 
-        WComboFuncionario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WComboFuncionario.setMaximumRowCount(100);
-        WComboFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Funcionario" }));
-        WComboFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        ComboFuncionario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboFuncionario.setMaximumRowCount(100);
+        ComboFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Funcionario" }));
+        ComboFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WComboFuncionarioActionPerformed(evt);
+                ComboFuncionarioActionPerformed(evt);
             }
         });
 
@@ -146,9 +158,9 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WIDFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addComponent(IdFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WComboFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,8 +169,8 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(WComboFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(WIDFuncionario)
+                    .addComponent(ComboFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(IdFuncionario)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -178,9 +190,20 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void WComboFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboFuncionarioActionPerformed
-        
-    }//GEN-LAST:event_WComboFuncionarioActionPerformed
+    private void ComboFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboFuncionarioActionPerformed
+    Connection con = Conexao.AbrirConexao();
+    FuncionarioDAO sql = new FuncionarioDAO(con);
+    List<Funcionario> lista = new ArrayList<>();
+    String nome = ComboFuncionario.getSelectedItem().toString();
+    
+    lista = sql.ConsultaCodigoFuncionario(nome);
+    
+    for(Funcionario c: lista){
+        int a = c.getCod();
+        IdFuncionario.setText("" + a);    
+    }
+    Conexao.FecharConexao(con);        
+    }//GEN-LAST:event_ComboFuncionarioActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
  new Menu().setVisible(true);
@@ -188,7 +211,28 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-      
+    String codigo = IdFuncionario.getText();
+    String nome = ComboFuncionario.getSelectedItem().toString();
+    
+    Connection con = Conexao.AbrirConexao();
+    FuncionarioDAO sql = new FuncionarioDAO(con);
+    Funcionario a = new Funcionario();
+    
+    if(nome.equals("")){
+        JOptionPane.showMessageDialog(null,"Nenhum Nome Selecionado","Video Locadora",JOptionPane.WARNING_MESSAGE);
+    }else{
+        int b = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir?"+"\n ("+codigo+")("+nome+")","Video Locadora"
+        ,JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(b == 0){
+            int cod = Integer.parseInt(codigo);
+            a.setNome(nome);
+            a.setCod(cod);
+            sql.Excluir_Funcionario(a);
+            Conexao.FecharConexao(con);
+            dispose();
+        }
+    }
+    new Menu().setVisible(true);
     }//GEN-LAST:event_deletarActionPerformed
 
     public static void main(String args[]) {
@@ -227,8 +271,8 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> WComboFuncionario;
-    private javax.swing.JTextField WIDFuncionario;
+    private javax.swing.JComboBox<String> ComboFuncionario;
+    private javax.swing.JTextField IdFuncionario;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton deletar;
     private javax.swing.JLabel jLabel1;

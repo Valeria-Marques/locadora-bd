@@ -52,9 +52,9 @@
                   <EmptySpace pref="52" max="32767" attributes="0"/>
                   <Component id="jLabel2" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="WIDCliente" min="-2" pref="59" max="-2" attributes="0"/>
+                  <Component id="IdCliente" min="-2" pref="59" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="WComboCliente" min="-2" pref="379" max="-2" attributes="0"/>
+                  <Component id="ComboCliente" min="-2" pref="379" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -66,8 +66,8 @@
                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                      <Component id="WIDCliente" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="WComboCliente" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="IdCliente" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="ComboCliente" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" pref="58" max="32767" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -84,12 +84,12 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="WIDCliente">
+        <Component class="javax.swing.JTextField" name="IdCliente">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="WComboCliente">
+        <Component class="javax.swing.JComboBox" name="ComboCliente">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -102,7 +102,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WComboClienteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboClienteActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

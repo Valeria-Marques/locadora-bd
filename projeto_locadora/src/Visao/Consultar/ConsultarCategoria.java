@@ -16,9 +16,27 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Consultar Categoria");
+        AtualizaTable();
     }
 
-    
+     private void AtualizaTable() {
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = bd.ListarCategoria();
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Categoria tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -165,11 +183,30 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_WPesquisaCodigoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+ String codigo = WPesquisaCodigo.getText();
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO sql = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = sql.PesquisarCodigoCategoria(codigo);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Categoria tab : lista) {      
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            i++; 
+            WPesquisaCodigo.setText("");          
+        }
+        Conexao.FecharConexao(con);       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
-        
+        AtualizaTable();
+        WPesquisaNome.setText("");
+        WPesquisaCodigo.setText("");        
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
@@ -178,7 +215,25 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_WVoltarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        String nome = WPesquisaNome.getText();
+        lista = bd.PesquisarNomeCategoria(nome);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Categoria tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getNome(), i, 1);
+            i++;
+            WPesquisaNome.setText("");
+            WPesquisaCodigo.setText("");
+        }
+        Conexao.FecharConexao(con);    
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {

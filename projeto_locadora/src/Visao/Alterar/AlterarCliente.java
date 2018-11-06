@@ -17,7 +17,26 @@ public class AlterarCliente extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Alterar Cliente");
     }
-
+private void InserirDados(int cod) {
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = sql.CapturarCliente(cod);
+        for (Cliente a : lista) {
+            WNumeroCliente.setText("" + a.getCodigo());
+            WNome.setText("" + a.getNome());
+            WCEP.setText("" + a.getCEP());
+            WNumero.setText("" + a.getNumero());
+            WBairro.setText("" + a.getBairro());
+            WEmail.setText("" + a.getEmail());
+            WTelefone.setText("" + a.getTelefone());
+            WRua.setText("" + a.getRua());
+            WDataNascimento.setText("" + a.getNascimento());
+            WRG.setText("" + a.getRG());
+            WCPF.setText("" + a.getCPF());
+        }
+        Conexao.FecharConexao(con);
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -380,15 +399,92 @@ public class AlterarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparActionPerformed
-     
+        WNome.setText("");
+        WDataNascimento.setText("");
+        WCEP.setText("");
+        WRua.setText("");
+        WNumero.setText("");
+        WBairro.setText("");
+        WEmail.setText("");
+        WTelefone.setText("");
+        WCPF.setText("");
+        WRG.setText("");     
     }//GEN-LAST:event_limparActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-       
+  String nome = WNome.getText();
+        String nascimento = WDataNascimento.getText();
+        String cep = WCEP.getText();
+        String rua = WRua.getText();
+        String numero = WNumero.getText();
+        String bairro = WBairro.getText();
+        String email = WEmail.getText();
+        String fone = WTelefone.getText();
+        String cpf = WCPF.getText();
+        String rg = WRG.getText();
+        String codigo = WNumeroCliente.getText();
+        if (nome.equals("") || nascimento.equals("") || cep.equals("") || rua.equals("") || numero.equals("")
+            || bairro.equals("") || email.equals("") || fone.equals("") || cpf.equals("") || rg.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Connection con = Conexao.AbrirConexao();
+            ClienteDAO sql = new ClienteDAO(con);
+            int num = Integer.parseInt(numero);
+            int cod = Integer.parseInt(codigo);
+            Cliente a = new Cliente();
+            a.setCodigo(cod);
+            a.setNome(nome);
+            a.setNascimento(nascimento);
+            a.setCEP(cep);
+            a.setRua(rua);
+            a.setNumero(num);
+            a.setBairro(bairro);
+            a.setEmail(email);
+            a.setTelefone(fone);
+            a.setCPF(cpf);
+            a.setRG(rg);
+            sql.AlterarCliente(a);
+            Conexao.FecharConexao(con);
+            WNome.setText("");
+            WDataNascimento.setText("");
+            WCEP.setText("");
+            WRua.setText("");
+            WNumero.setText("");
+            WBairro.setText("");
+            WEmail.setText("");
+            WTelefone.setText("");
+            WCPF.setText("");
+            WRG.setText("");
+            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+        }
+        dispose();       
     }//GEN-LAST:event_alterarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
+   String codigo = WCodigo.getText();
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        int cod = Integer.parseInt(codigo);
+        if (sql.TestarCliente(cod) == false) {
+            JOptionPane.showMessageDialog(null, "O código não foi encontrado!", "Vidio Locadora", JOptionPane.WARNING_MESSAGE);
+            Conexao.FecharConexao(con);
+        }
+        if (codigo.equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe um código!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        WNumeroCliente.setText("");
+        WNome.setText("");
+        WCEP.setText("");
+        WNumero.setText("");
+        WBairro.setText("");
+        WEmail.setText("");
+        WTelefone.setText("");
+        WRua.setText("");
+        WDataNascimento.setText("");
+        WRG.setText("");
+        WCPF.setText("");
+        InserirDados(cod);       
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
