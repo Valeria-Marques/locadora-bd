@@ -16,8 +16,31 @@ public class ConsultarFilme extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(this);
         setTitle("Consultar Filme");
+        AtualizaTable();
     }
-
+private void AtualizaTable(){
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd =  new FilmeDAO(con);
+        List<Filme> lista = new ArrayList();
+        lista = bd.ListarFilme();
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Filme tab : lista){
+            tbm.addRow(new String[1]);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getTitulo(), i, 1);
+            Tabela.setValueAt(tab.getAno(), i, 2);
+            Tabela.setValueAt(tab.getDuracao(), i, 3);
+            Tabela.setValueAt(tab.getCodigoCategoria(), i, 4);
+            Tabela.setValueAt(tab.getCodigoClassificacao(), i, 5);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+        
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -26,14 +49,14 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        WPesquisaTitulo = new javax.swing.JTextField();
+        PesquisaTitulo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        WPesquisaCodigo = new javax.swing.JTextField();
+        PesquisaCodigo = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         WTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        WTabela = new javax.swing.JTable();
+        Tabela = new javax.swing.JTable();
         WVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,8 +91,8 @@ public class ConsultarFilme extends javax.swing.JFrame {
             }
         });
 
-        WTabela.setBackground(new java.awt.Color(204, 204, 204));
-        WTabela.setModel(new javax.swing.table.DefaultTableModel(
+        Tabela.setBackground(new java.awt.Color(204, 204, 204));
+        Tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,7 +100,7 @@ public class ConsultarFilme extends javax.swing.JFrame {
                 "Código", "Filme", "Ano", "Duração", "Categoria", "Classificação"
             }
         ));
-        jScrollPane1.setViewportView(WTabela);
+        jScrollPane1.setViewportView(Tabela);
 
         WVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         WVoltar.setText("VOLTAR");
@@ -100,7 +123,7 @@ public class ConsultarFilme extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(WPesquisaTitulo)
+                                .addComponent(PesquisaTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(78, 78, 78)
@@ -112,7 +135,7 @@ public class ConsultarFilme extends javax.swing.JFrame {
                                 .addComponent(WVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(94, 94, 94))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12))))
@@ -127,10 +150,10 @@ public class ConsultarFilme extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(WPesquisaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PesquisaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel2)
-                    .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -156,15 +179,53 @@ public class ConsultarFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
+    Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd =  new FilmeDAO(con);
+        List<Filme> lista = new ArrayList();
+        lista = bd.PesquisarTituloFilme(PesquisaTitulo.getText());
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Filme tab : lista){
+            tbm.addRow(new String[1]);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getTitulo(), i, 1);
+            Tabela.setValueAt(tab.getAno(), i, 2);
+            Tabela.setValueAt(tab.getDuracao(), i, 3);
+            Tabela.setValueAt(tab.getCodigoCategoria(), i, 4);
+            Tabela.setValueAt(tab.getCodigoClassificacao(), i, 5);
+            i++;
+        }
+        Conexao.FecharConexao(con);      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+  Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd =  new FilmeDAO(con);
+        List<Filme> lista = new ArrayList();
+        lista = bd.PegarIDFilme(Integer.parseInt(PesquisaCodigo.getText()));
+        DefaultTableModel tbm = (DefaultTableModel) Tabela.getModel();
+        while(tbm.getRowCount() > 0){
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for(Filme tab : lista){
+            tbm.addRow(new String[1]);
+            Tabela.setValueAt(tab.getCodigo(), i, 0);
+            Tabela.setValueAt(tab.getTitulo(), i, 1);
+            Tabela.setValueAt(tab.getAno(), i, 2);
+            Tabela.setValueAt(tab.getDuracao(), i, 3);
+            Tabela.setValueAt(tab.getCodigoCategoria(), i, 4);
+            Tabela.setValueAt(tab.getCodigoClassificacao(), i, 5);
+            i++;
+        }
+        Conexao.FecharConexao(con);       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
-       
+  AtualizaTable();
     }//GEN-LAST:event_WTodosActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
@@ -208,9 +269,9 @@ public class ConsultarFilme extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField WPesquisaCodigo;
-    private javax.swing.JTextField WPesquisaTitulo;
-    private javax.swing.JTable WTabela;
+    private javax.swing.JTextField PesquisaCodigo;
+    private javax.swing.JTextField PesquisaTitulo;
+    private javax.swing.JTable Tabela;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;
     private javax.swing.JButton jButton1;

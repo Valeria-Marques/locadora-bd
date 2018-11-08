@@ -38,7 +38,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         Conexao.FecharConexao(con);
     }
      public void BuscarNome(){
-          Connection con = Conexao.AbrirConexao();
+        Connection con = Conexao.AbrirConexao();
         CategoriaDAO bd =  new CategoriaDAO(con);
         List<Categoria> lista = new ArrayList();
         lista = bd.PesquisarNomeCategoria(Nome.getText());
@@ -52,6 +52,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
             Tabela.setValueAt(tab.getCodigo(), i, 0);
             Tabela.setValueAt(tab.getNome(), i, 1);
             i++;
+            WPesquisaCodigo.setText("");
         }
         Conexao.FecharConexao(con); 
      }
@@ -216,7 +217,7 @@ public class ConsultarCategoria extends javax.swing.JFrame {
             Tabela.setValueAt(tab.getCodigo(), i, 0);
             Tabela.setValueAt(tab.getNome(), i, 1);
             i++; 
-            WPesquisaCodigo.setText("");          
+            Nome.setText("");
         }
         Conexao.FecharConexao(con);       
     }//GEN-LAST:event_jButton2ActionPerformed

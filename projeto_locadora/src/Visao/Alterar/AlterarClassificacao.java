@@ -241,7 +241,7 @@ private void InserirDados(int cod) {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-   String nome = Nome.getText();
+        String nome = Nome.getText();
         String numero = Numero.getText();
         String preco = Preco.getText();
         if (nome.equals("") || numero.equals("")) {
@@ -250,7 +250,7 @@ private void InserirDados(int cod) {
             Connection con = Conexao.AbrirConexao();
             ClassificacaoDAO sql = new ClassificacaoDAO(con);
             int num = Integer.parseInt(numero);
-            int pre = Integer.parseInt(preco);
+            double pre = Double.parseDouble(preco);
             Classificacao a = new Classificacao();
             a.setCodigo(num);
             a.setPreco(pre);

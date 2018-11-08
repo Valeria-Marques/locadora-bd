@@ -7,27 +7,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class FilmeDAO extends ExecuteSQL{
-  public FilmeDAO(Connection con) {
+  
+    public FilmeDAO(Connection con) {
         super(con);
     }
-
-    public String InserirFilme(Filme f) {
+  
+     public String InserirFilme(Filme c) {
         String sql = "INSERT INTO filme VALUES (0,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
-            ps.setString(1, f.getTitulo());
-            ps.setInt(2, f.getAno());
-            ps.setString(3, f.getDuracao());
-            ps.setInt(4, f.getCodigoCategoria());
-            ps.setInt(5, f.getCodigoClassificacao());
-            ps.setString(6, f.getCapa());
+            ps.setString(1, c.getTitulo());
+            ps.setInt(2, c.getAno());
+            ps.setString(3, c.getDuracao());
+            ps.setInt(4, c.getCodigoCategoria());
+            ps.setInt(5, c.getCodigoClassificacao());
+            ps.setString(6, c.getCapa());
             
             if (ps.executeUpdate() > 0) {
-                return "Filme cadastrado!";
+                return "Cliente cadastrado com sucesso.";
             } else {
-                return "Problema ao cadastrar filme.";
+                return "Erro ao cadastrar cliente.";
             }
         } catch (SQLException e) {
             return e.getMessage();
@@ -150,7 +152,7 @@ public class FilmeDAO extends ExecuteSQL{
     }
 
     public List<Filme> PegarIDFilme(int id) {
-        String sql = "SELECT  idfilme, titulo, ano, duracao, idcategoria, idclassificacao, capa FROM filme WHERE idfilme LIKE'" + id + "%'";
+        String sql = "SELECT  idfilme, titulo, ano, duracao, idcategoria, idclassificacao FROM filme WHERE idfilme LIKE'" + id + "%'";
         List<Filme> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -165,7 +167,6 @@ public class FilmeDAO extends ExecuteSQL{
                     f.setDuracao(rs.getString(4));
                     f.setCodigoCategoria(rs.getInt(5));
                     f.setCodigoClassificacao(rs.getInt(6));
-                    f.setCapa(rs.getString(7));
                     lista.add(f);
                 }
                 return lista;

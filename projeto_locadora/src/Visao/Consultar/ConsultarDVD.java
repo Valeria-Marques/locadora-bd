@@ -16,8 +16,29 @@ public class ConsultarDVD extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Consultar DVD'S");
+        AtualizarTable();
     }
-
+public void AtualizarTable() {
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO bd = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        lista = bd.ListarDVD();
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (DVD tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getCodigoFilme(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            WTabela.setValueAt(tab.getDataCompra(), i, 3);
+            WTabela.setValueAt(tab.getSituacao(), i, 4);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -26,10 +47,10 @@ public class ConsultarDVD extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        WPesquisaCodigo = new javax.swing.JTextField();
+        PesquisarCodigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        WPesquisaCodigoFilme = new javax.swing.JTextField();
+        PesqusarFilme = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         WTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -43,9 +64,9 @@ public class ConsultarDVD extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Pesquisar/Código:");
 
-        WPesquisaCodigo.addActionListener(new java.awt.event.ActionListener() {
+        PesquisarCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WPesquisaCodigoActionPerformed(evt);
+                PesquisarCodigoActionPerformed(evt);
             }
         });
 
@@ -68,6 +89,11 @@ public class ConsultarDVD extends javax.swing.JFrame {
 
         WTodos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         WTodos.setText("TODOS");
+        WTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WTodosActionPerformed(evt);
+            }
+        });
 
         WTabela.setBackground(new java.awt.Color(204, 204, 204));
         WTabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -75,7 +101,7 @@ public class ConsultarDVD extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Código do Filme", "Ano", "Preço da Compra", "Data da Compra", "Situação"
+                "Código", "Código do Filme", "Preço da Compra", "Data da Compra", "Situação"
             }
         ));
         jScrollPane1.setViewportView(WTabela);
@@ -109,13 +135,13 @@ public class ConsultarDVD extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(WPesquisaCodigoFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PesqusarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(51, 51, 51))))))
@@ -129,8 +155,8 @@ public class ConsultarDVD extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addComponent(jButton1)
                         .addComponent(jLabel2)
-                        .addComponent(WPesquisaCodigoFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(WPesquisaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PesqusarFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(PesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,22 +182,66 @@ public class ConsultarDVD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- 
+  Connection con = Conexao.AbrirConexao();
+        DVDDAO bd = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        int cod = Integer.parseInt(PesquisarCodigo.getText());
+        lista = bd.CodigoDVD(cod);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (DVD tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getCodigoFilme(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            WTabela.setValueAt(tab.getDataCompra(), i, 3);
+            WTabela.setValueAt(tab.getSituacao(), i, 4);
+            i++;
+            PesquisarCodigo.setText("");
+        }
+        Conexao.FecharConexao(con); 
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+       Connection con = Conexao.AbrirConexao();
+        DVDDAO bd = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        int codfilme = Integer.parseInt(PesqusarFilme.getText());
+        lista = bd.PegarIDFilme(codfilme);
+        DefaultTableModel tbm = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (DVD tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCodigo(), i, 0);
+            WTabela.setValueAt(tab.getCodigoFilme(), i, 1);
+            WTabela.setValueAt(tab.getPreco(), i, 2);
+            WTabela.setValueAt(tab.getDataCompra(), i, 3);
+            WTabela.setValueAt(tab.getSituacao(), i, 4);
+            i++;
+            PesqusarFilme.setText("");
+        }
+        Conexao.FecharConexao(con);        
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void WPesquisaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WPesquisaCodigoActionPerformed
+    private void PesquisarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_WPesquisaCodigoActionPerformed
+    }//GEN-LAST:event_PesquisarCodigoActionPerformed
 
     private void WVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WVoltarActionPerformed
         new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_WVoltarActionPerformed
+
+    private void WTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WTodosActionPerformed
+        AtualizarTable();
+    }//GEN-LAST:event_WTodosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -221,8 +291,8 @@ public class ConsultarDVD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField WPesquisaCodigo;
-    private javax.swing.JTextField WPesquisaCodigoFilme;
+    private javax.swing.JTextField PesquisarCodigo;
+    private javax.swing.JTextField PesqusarFilme;
     private javax.swing.JTable WTabela;
     private javax.swing.JButton WTodos;
     private javax.swing.JButton WVoltar;

@@ -16,7 +16,19 @@ public class AlterarDVD extends javax.swing.JFrame {
         setSize(615,435);
         setTitle("Alterar DVD");
     }
-
+ private void InserirDados(int cod) {
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO sql = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        lista = sql.CapturarDVD(cod);
+        for (DVD d : lista) {
+            WPrecoCompra.setText("" + d.getPreco());
+            WDataCompra.setText("" + d.getDataCompra());
+            WSituacao.setText("" + d.getSituacao());
+            WCodigoFilme.setText("" + d.getCodigoFilme());
+        }
+        Conexao.FecharConexao(con);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -214,11 +226,51 @@ public class AlterarDVD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+    String codigo = WCodigo.getText();
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO sql = new DVDDAO(con);
+        int cod = Integer.parseInt(codigo);
+        if (sql.TestarDVD(cod) == false) {
+            JOptionPane.showMessageDialog(null, "Informe um código!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        if (codigo.equals("")) {
+            JOptionPane.showMessageDialog(null, "O código não foi encontrado!", "Vidio Locadora", JOptionPane.WARNING_MESSAGE);
+                Conexao.FecharConexao(con);
+        }
+        WPrecoCompra.setText("");
+        WDataCompra.setText("");
+        WSituacao.setText("");
+        InserirDados(cod);        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+  int codigo = Integer.parseInt(WCodigo.getText());
+        int codigoFilme = Integer.parseInt(WCodigoFilme.getText());
+        double preco = Double.parseDouble(WPrecoCompra.getText());
+        String situacao = WSituacao.getText();
+        String datacompra = WDataCompra.getText();
+        if (situacao.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Connection con = Conexao.AbrirConexao();
+            DVDDAO sql = new DVDDAO(con);
+            DVD a = new DVD();
+            a.setCodigo(codigo);
+            a.setCodigoFilme(codigoFilme);
+            a.setPreco(preco);
+            a.setDataCompra(datacompra);
+            a.setSituacao(situacao);
+            sql.AlterarDVD(a);
+            Conexao.FecharConexao(con);
+            WPrecoCompra.setText("");
+            WDataCompra.setText("");
+            WSituacao.setText("");
+            WCodigo.setText("");
+            WCodigoFilme.setText("");
+            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+            dispose();
+        }        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -227,7 +279,11 @@ public class AlterarDVD extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+ WPrecoCompra.setText("");
+        WDataCompra.setText("");
+        WSituacao.setText("");
+        WCodigo.setText("");
+        WCodigoFilme.setText("");        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {

@@ -206,12 +206,13 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public String AlterarClassificacao(Classificacao c) {
-        String sql = "UPDATE classificacao SET nome = ?, preco = ? WHERE idclassificacao = ? ";
-        try {
+    String sql = "UPDATE classificacao SET nome = ?, preco = ? WHERE idclassificacao = ? ";
+       try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, c.getNome());
-            ps.setInt(2, c.getCodigo());
-            ps.setInt(3, (int) c.getPreco());
+            ps.setDouble(2, c.getPreco());
+            ps.setInt(3, c.getCodigo());
+
 
             if (ps.executeUpdate() > 0) {
                 return "Editado(a)!";

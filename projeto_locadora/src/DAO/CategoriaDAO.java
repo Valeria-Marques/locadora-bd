@@ -113,7 +113,7 @@ public class CategoriaDAO extends ExecuteSQL{
     }
 
     public List<Categoria> PesquisarNomeCategoria(String nome) {
-        String sql = "SELECT idcategoria, nome FROM categoria WHERE nome lLIKE '%" + nome + "%'";
+        String sql = "SELECT idcategoria, nome FROM categoria WHERE nome LIKE '%" + nome + "%'";
         List<Categoria> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);

@@ -23,7 +23,6 @@ public class ExcluirCliente extends javax.swing.JFrame {
     ClienteDAO sql = new ClienteDAO(con);
     List<Cliente> lista = new ArrayList<>();
     lista =  sql.ListarComboCliente();
-    ComboCliente.addItem("");
     for(Cliente c : lista){
        ComboCliente.addItem(c.getNome()); 
     }
@@ -52,6 +51,11 @@ public class ExcluirCliente extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         IdCliente.setEnabled(false);
+        IdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdClienteActionPerformed(evt);
+            }
+        });
 
         ComboCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ComboCliente.setMaximumRowCount(100);
@@ -211,6 +215,10 @@ public class ExcluirCliente extends javax.swing.JFrame {
         new Menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_cancelarActionPerformed
+
+    private void IdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IdClienteActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

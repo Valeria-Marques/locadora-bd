@@ -17,11 +17,56 @@ public class AlterarFilme extends javax.swing.JFrame {
 
     public AlterarFilme() {
         initComponents();
+        AtualizaComboCategoria();
+        AtualizaComboClassificacao();
          setSize(710,437);
         setTitle("Alterar Filme");
     }
 
-    
+    private void InserirDados(int cod) {
+        String codigo = Codigo.getText();
+        if (codigo.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Connection con = Conexao.AbrirConexao();
+            FilmeDAO sql = new FilmeDAO(con);
+            List<Filme> lista = new ArrayList<>();
+            lista = sql.CapturarFilme(cod);
+            for (Filme a : lista) {
+                Codigo.setText("" + a.getCodigo());
+                WTitulo.setText("" + a.getTitulo());
+                WAno.setText("" + a.getAno());
+                WDuracao.setText("" + a.getDuracao());
+                WIDCategoria.setText("" + a.getCodigoCategoria());
+                WIDClassificacao.setText("" + a.getCodigoClassificacao());
+            }
+            Conexao.FecharConexao(con);
+        }
+    }
+
+    private void AtualizaComboCategoria() {
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO sql = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = sql.ListarComboCategoria();
+        WComboCategoria.addItem("");
+        for (Categoria b : lista) {
+            WComboCategoria.addItem(b.getNome());
+        }
+        Conexao.FecharConexao(con);
+    }
+
+    private void AtualizaComboClassificacao() {
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = sql.ListarComboClassificacao();
+        WComboClassificacao.addItem("");
+        for (Classificacao b : lista) {
+            WComboClassificacao.addItem(b.getNome());
+        }
+        Conexao.FecharConexao(con);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -32,7 +77,6 @@ public class AlterarFilme extends javax.swing.JFrame {
         codg1 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         WTitulo = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         WDuracao = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -42,9 +86,9 @@ public class AlterarFilme extends javax.swing.JFrame {
         limpar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        WCodigo1 = new javax.swing.JTextField();
+        CodigoPegar = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        WCodigo = new javax.swing.JTextField();
+        Codigo = new javax.swing.JTextField();
         WAno = new javax.swing.JFormattedTextField();
         WIDCategoria = new javax.swing.JTextField();
         WIDClassificacao = new javax.swing.JTextField();
@@ -55,6 +99,7 @@ public class AlterarFilme extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         WComboClassificacao = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -95,10 +140,6 @@ public class AlterarFilme extends javax.swing.JFrame {
         getContentPane().setLayout(null);
         getContentPane().add(WTitulo);
         WTitulo.setBounds(124, 160, 560, 20);
-
-        jLabel8.setText("Duração:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(287, 189, 70, 14);
 
         try {
             WDuracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
@@ -197,16 +238,16 @@ public class AlterarFilme extends javax.swing.JFrame {
             }
         });
 
-        WCodigo1.addActionListener(new java.awt.event.ActionListener() {
+        CodigoPegar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WCodigo1ActionPerformed(evt);
+                CodigoPegarActionPerformed(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Informe o Código:");
 
-        WCodigo.setEditable(false);
+        Codigo.setEditable(false);
 
         try {
             WAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
@@ -251,6 +292,8 @@ public class AlterarFilme extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Duração:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -264,9 +307,10 @@ public class AlterarFilme extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel3)))
                                 .addGap(24, 24, 24)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -276,17 +320,26 @@ public class AlterarFilme extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(WAno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(WIDCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(WComboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(WCodigo1)
+                            .addComponent(CodigoPegar)
                             .addGap(18, 18, 18)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(WCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Codigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(WIDCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(WAno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(21, 21, 21)))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(WComboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel8)
+                                    .addGap(0, 0, Short.MAX_VALUE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(WIDClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -301,17 +354,18 @@ public class AlterarFilme extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
-                            .addComponent(WCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CodigoPegar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(WCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WIDCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -333,15 +387,61 @@ public class AlterarFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
-        
+         String titulo = WTitulo.getText();
+        String duracao = WDuracao.getText();
+        String codigo = Codigo.getText();
+        String anoo = WAno.getText();
+        String Categoria = WIDCategoria.getText();
+        String Classificacao = WIDClassificacao.getText();
+        if (titulo.equals("") || anoo.equals("") || duracao.equals("") || Categoria.equals("")
+            || Classificacao.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Connection con = Conexao.AbrirConexao();
+            FilmeDAO sql = new FilmeDAO(con);
+            int cod = Integer.parseInt(codigo);
+            int categoria = Integer.parseInt(Categoria);
+            int classificacao = Integer.parseInt(Classificacao);
+            int ano = Integer.parseInt(anoo);
+            Filme a = new Filme();
+            a.setCodigo(cod);
+            a.setCodigoCategoria(categoria);
+            a.setCodigoClassificacao(classificacao);
+            a.setAno(ano);
+            a.setDuracao(duracao);
+            a.setTitulo(titulo);
+            sql.AlterarFilme(a);
+            Conexao.FecharConexao(con);
+            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
+        }
+        dispose();
     }//GEN-LAST:event_cadastrarActionPerformed
 
     private void WComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboCategoriaActionPerformed
-        
+Connection con = Conexao.AbrirConexao();
+        CategoriaDAO sql = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        String nome = WComboCategoria.getSelectedItem().toString();
+        lista = sql.ConsultaCodigoCategoria(nome);
+        for (Categoria b : lista) {
+            int a = b.getCodigo();
+            WIDCategoria.setText("" + a);
+        }
+        Conexao.FecharConexao(con);        
     }//GEN-LAST:event_WComboCategoriaActionPerformed
 
     private void WComboClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboClassificacaoActionPerformed
-       
+       Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO sql = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        String nome = WComboClassificacao.getSelectedItem().toString();
+        lista = sql.ConsultaCodigoClassificacao(nome);
+        for (Classificacao b : lista) {
+            int a = b.getCodigo();
+            WIDClassificacao.setText("" + a);
+        }
+        Conexao.FecharConexao(con);
     }//GEN-LAST:event_WComboClassificacaoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -354,15 +454,37 @@ public class AlterarFilme extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparActionPerformed
-       
+        WTitulo.setText("");
+        WAno.setText("");
+        WDuracao.setText("");
+        WComboCategoria.setSelectedItem("");
+        WComboClassificacao.setSelectedItem("");
+        WIDCategoria.setText("");
+        WIDClassificacao.setText("");       
     }//GEN-LAST:event_limparActionPerformed
 
-    private void WCodigo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WCodigo1ActionPerformed
+    private void CodigoPegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CodigoPegarActionPerformed
 
-    }//GEN-LAST:event_WCodigo1ActionPerformed
+    }//GEN-LAST:event_CodigoPegarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        String codigo = CodigoPegar.getText();
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        int cod = Integer.parseInt(codigo);
+        if (sql.TestarFilme(cod) == false) {
+            JOptionPane.showMessageDialog(null, "O código não foi encontrado!", "Vidio Locadora", JOptionPane.WARNING_MESSAGE);
+            Conexao.FecharConexao(con);
+        }
+        if (codigo.equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe um código!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        Codigo.setText("");
+        WTitulo.setText("");
+        WAno.setText("");
+        WDuracao.setText("");
+        WIDCategoria.setText("");
+        WIDClassificacao.setText("");        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     
@@ -403,9 +525,9 @@ public class AlterarFilme extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelar;
+    private javax.swing.JTextField Codigo;
+    private javax.swing.JTextField CodigoPegar;
     private javax.swing.JFormattedTextField WAno;
-    private javax.swing.JTextField WCodigo;
-    private javax.swing.JTextField WCodigo1;
     private javax.swing.JComboBox<String> WComboCategoria;
     private javax.swing.JComboBox<String> WComboClassificacao;
     private javax.swing.JFormattedTextField WDuracao;

@@ -119,7 +119,7 @@ public class DVDDAO extends ExecuteSQL{
     }
 
     public List<DVD> CodigoDVD(int cod) {
-        String sql = "SELECT iddvd, idfilme, preco_compra, data_compra, situacao FROM dvd WHERE iddvd LIKE'" + cod + "%'";
+        String sql = "SELECT iddvd FROM dvd WHERE iddvd LIKE'" + cod + "%'";
         List<DVD> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -129,10 +129,6 @@ public class DVDDAO extends ExecuteSQL{
                 while (rs.next()) {
                     DVD d = new DVD();
                     d.setCodigo(rs.getInt(1));
-                    d.setCodigoFilme(rs.getInt(2));
-                    d.setPreco(rs.getDouble(3));
-                    d.setDataCompra(rs.getString(4));
-                    d.setSituacao(rs.getString(5));
                     lista.add(d);
                 }
                 return lista;

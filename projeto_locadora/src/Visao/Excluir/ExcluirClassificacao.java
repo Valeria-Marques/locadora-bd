@@ -23,7 +23,6 @@ public class ExcluirClassificacao extends javax.swing.JFrame {
     ClassificacaoDAO sql = new ClassificacaoDAO(con);
     List<Classificacao> lista = new ArrayList<>();
     lista =  sql.ListarComboClassificacao();
-    ComboClassificacao.addItem("");
     for(Classificacao c : lista){
        ComboClassificacao.addItem(c.getNome()); 
     }

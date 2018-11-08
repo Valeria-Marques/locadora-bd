@@ -15,7 +15,19 @@ public class ExcluirDVD extends javax.swing.JFrame {
         initComponents();
         setSize(500,290);
         setTitle("Deletar DVD");
+        AtualizaCombo();
     }
+    private void AtualizaCombo() {
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO sql = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        lista = sql.ListarComboDVD();
+        for (DVD b : lista) {
+            ComboDVD.addItem(b.getCodigo()+"");
+        }
+        Conexao.FecharConexao(con);
+    }
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -29,7 +41,7 @@ public class ExcluirDVD extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        WComboDVD = new javax.swing.JComboBox<>();
+        ComboDVD = new javax.swing.JComboBox<>();
         WIDDVD = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
@@ -117,12 +129,12 @@ public class ExcluirDVD extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        WComboDVD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WComboDVD.setMaximumRowCount(100);
-        WComboDVD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar DVD", " " }));
-        WComboDVD.addActionListener(new java.awt.event.ActionListener() {
+        ComboDVD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboDVD.setMaximumRowCount(100);
+        ComboDVD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar DVD", " " }));
+        ComboDVD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WComboDVDActionPerformed(evt);
+                ComboDVDActionPerformed(evt);
             }
         });
 
@@ -146,7 +158,7 @@ public class ExcluirDVD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(WIDDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WComboDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,7 +166,7 @@ public class ExcluirDVD extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(WComboDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(WIDDVD, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
@@ -167,7 +179,24 @@ public class ExcluirDVD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-       
+String codigo = WIDDVD.getText();
+        String nome = ComboDVD.getSelectedItem().toString();
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO sql = new DVDDAO(con);
+        DVD a = new DVD();
+        if (nome.equals("")) {
+            JOptionPane.showMessageDialog(null, "Não foi selecionado nenhum DVD!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int b = JOptionPane.showConfirmDialog(null, "Deseja excluir?" + "\n" + codigo + " - " + nome + "", "Video Locadora", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (b == 0) {
+                int cod = Integer.parseInt(codigo);
+                a.setCodigo(cod);
+                sql.ExcluirDVD(a);
+                Conexao.FecharConexao(con);
+                new Menu().setVisible(true);
+                dispose();
+            }
+        }       
     }//GEN-LAST:event_deletarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -179,9 +208,19 @@ public class ExcluirDVD extends javax.swing.JFrame {
 
     }//GEN-LAST:event_WComboCategoriaActionPerformed
 
-    private void WComboDVDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboDVDActionPerformed
-   
-    }//GEN-LAST:event_WComboDVDActionPerformed
+    private void ComboDVDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboDVDActionPerformed
+  Connection con = Conexao.AbrirConexao();
+        DVDDAO sql = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        String nome = ComboDVD.getSelectedItem().toString();
+        int c = Integer.parseInt(nome);
+        lista = sql.ConsultaCodigoDVD(c);
+        for (DVD b : lista) {
+            int a = b.getCodigo();
+            WIDDVD.setText("" + a);
+        }
+        Conexao.FecharConexao(con);   
+    }//GEN-LAST:event_ComboDVDActionPerformed
 
     private void WIDDVDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WIDDVDActionPerformed
         // TODO add your handling code here:
@@ -223,8 +262,8 @@ public class ExcluirDVD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboDVD;
     private javax.swing.JComboBox<String> WComboCategoria;
-    private javax.swing.JComboBox<String> WComboDVD;
     private javax.swing.JTextField WIDCategoria;
     private javax.swing.JTextField WIDDVD;
     private javax.swing.JButton cancelar;

@@ -8,7 +8,7 @@ public class Filme {
     private int CodigoClassificacao;
     private String capa;
     private int FCodigo;
-
+    
     public int getFCodigo() {
         return FCodigo;
     }
@@ -25,6 +25,14 @@ public class Filme {
         this.codigo = codigo;
     }
 
+    public String getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(String duracao) {
+        this.duracao = duracao;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -39,14 +47,6 @@ public class Filme {
 
     public void setAno(int ano) {
         this.ano = ano;
-    }
-
-    public String getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(String duracao) {
-        this.duracao = duracao;
     }
 
     public int getCodigoCategoria() {

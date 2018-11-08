@@ -15,9 +15,12 @@ import Modelo.Categoria;
 import Modelo.Classificacao;
 import Modelo.Filme;
 import Principal.Menu;
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 public class CadastrarFilme extends javax.swing.JFrame {
 
@@ -37,7 +40,6 @@ public class CadastrarFilme extends javax.swing.JFrame {
         CategoriaDAO sql = new CategoriaDAO(Con);
         List<Categoria> lista = new ArrayList<>();
         lista = sql.ListarComboCategoria();
-        ComboCategoria.addItem("");
         for (Categoria c : lista) {
             ComboCategoria.addItem(c.getNome());
         }
@@ -49,7 +51,6 @@ public class CadastrarFilme extends javax.swing.JFrame {
         ClassificacaoDAO sql = new ClassificacaoDAO(Con);
         List<Classificacao> lista = new ArrayList<>();
         lista = sql.ListarComboClassificacao();
-        ComboClassificacao.addItem("");
         for (Classificacao c : lista) {
             ComboClassificacao.addItem(c.getNome());
         }
@@ -69,14 +70,14 @@ public class CadastrarFilme extends javax.swing.JFrame {
         Ano = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbCapa = new javax.swing.JLabel();
         Duracao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         ComboCategoria = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         ComboClassificacao = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        tfCapa = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         IdClassificacao = new javax.swing.JTextField();
         IdCategoria = new javax.swing.JTextField();
@@ -119,23 +120,23 @@ public class CadastrarFilme extends javax.swing.JFrame {
 
         jPanel4.setEnabled(false);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD_VIDEO_logo.png"))); // NOI18N
+        lbCapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD_VIDEO_logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lbCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -167,6 +168,11 @@ public class CadastrarFilme extends javax.swing.JFrame {
         jLabel8.setText("Capa:");
 
         jButton3.setText("OK");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         IdClassificacao.setEditable(false);
 
@@ -213,7 +219,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -253,7 +259,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
                             .addComponent(IdClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -328,27 +334,34 @@ public class CadastrarFilme extends javax.swing.JFrame {
         String nome = Titulo.getText();
         String AnoData = Ano.getText();
         String duracao = Duracao.getText();
+        String capa = lbCapa.getText();
         String idCategoria = IdCategoria.getText();
         String idClassificacao = IdClassificacao.getText();
-        int ano = Integer.parseInt(AnoData);
-        int categoria = Integer.parseInt(idCategoria);
-        int classificacao = Integer.parseInt(idClassificacao);
         if (nome.equals("")) {
             JOptionPane.showMessageDialog(null, "Nenhum campo pode está vazio.", "Video Locadora", JOptionPane.WARNING_MESSAGE);
         } else {
             Connection con = Conexao.AbrirConexao();
             FilmeDAO sql = new FilmeDAO(con);
+            
+            int ano = Integer.parseInt(AnoData);
+            int categoria = Integer.parseInt(idCategoria);
+            int classificacao = Integer.parseInt(idClassificacao);
+            
             Filme f = new Filme();
             f.setTitulo(nome);
             f.setAno(ano);
             f.setDuracao(duracao);
             f.setCodigoCategoria(categoria);
             f.setCodigoClassificacao(classificacao);
+            f.setCapa(capa);
+            
             sql.InserirFilme(f);
             Conexao.FecharConexao(con);
+            
             Titulo.setText("");
             Ano.setText("");
             Duracao.setText("");
+            lbCapa.setText("");
             IdCategoria.setText("");
             IdClassificacao.setText("");
             JOptionPane.showMessageDialog(null, "Cadastro concluido!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
@@ -382,6 +395,20 @@ public class CadastrarFilme extends javax.swing.JFrame {
         }
         Conexao.FecharConexao(con);
     }//GEN-LAST:event_ComboClassificacaoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            JFileChooser foto = new JFileChooser();
+            foto.setCurrentDirectory(new File("C:/Locadora/"));
+            foto.setDialogTitle("Carregar Capa");
+            foto.showOpenDialog(this);
+            String a = ""+foto.getSelectedFile().getName();
+            tfCapa.setText(a);
+            lbCapa.setIcon(new ImageIcon("C:/Locadora/"+tfCapa.getText()+"/"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nao foi possivel carregar capa");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -432,7 +459,6 @@ public class CadastrarFilme extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -444,7 +470,8 @@ public class CadastrarFilme extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel lbCapa;
+    private javax.swing.JTextField tfCapa;
     // End of variables declaration//GEN-END:variables
 }

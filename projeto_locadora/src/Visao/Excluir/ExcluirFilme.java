@@ -16,8 +16,18 @@ public class ExcluirFilme extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setResizable(false);
         setTitle("Deletar Filme");
+        AtualizarCombo();
     }
-
+private void AtualizarCombo(){
+    Connection con = Conexao.AbrirConexao();
+    FilmeDAO sql = new FilmeDAO(con);
+    List<Filme> lista = new ArrayList<>();
+    lista =  sql.ListarComboFilme();
+    for(Filme c : lista){
+       ComboFilme.addItem(c.getTitulo()); 
+    }
+    Conexao.FecharConexao(con);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,8 +39,8 @@ public class ExcluirFilme extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        WIDFilme = new javax.swing.JTextField();
-        WComboFilme = new javax.swing.JComboBox<>();
+        IdFilme = new javax.swing.JTextField();
+        ComboFilme = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         cancelar = new javax.swing.JButton();
         deletar = new javax.swing.JButton();
@@ -88,14 +98,14 @@ public class ExcluirFilme extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
-        WIDFilme.setEnabled(false);
+        IdFilme.setEnabled(false);
 
-        WComboFilme.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        WComboFilme.setMaximumRowCount(100);
-        WComboFilme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Filme", " " }));
-        WComboFilme.addActionListener(new java.awt.event.ActionListener() {
+        ComboFilme.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboFilme.setMaximumRowCount(100);
+        ComboFilme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar Filme" }));
+        ComboFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WComboFilmeActionPerformed(evt);
+                ComboFilmeActionPerformed(evt);
             }
         });
 
@@ -170,9 +180,9 @@ public class ExcluirFilme extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WIDFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(IdFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(WComboFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
         jPanel1Layout.setVerticalGroup(
@@ -182,9 +192,9 @@ public class ExcluirFilme extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(WIDFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(IdFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(WComboFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -203,9 +213,18 @@ public class ExcluirFilme extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void WComboFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboFilmeActionPerformed
-       
-    }//GEN-LAST:event_WComboFilmeActionPerformed
+    private void ComboFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboFilmeActionPerformed
+  Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        List<Filme> lista = new ArrayList<>();
+        String nome = ComboFilme.getSelectedItem().toString();
+        lista = sql.ConsultaCodigoFilme(nome);
+        for (Filme b : lista) {
+            int a = b.getCodigo();
+            IdFilme.setText(""+a);
+        }
+        Conexao.FecharConexao(con);
+    }//GEN-LAST:event_ComboFilmeActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
  new Menu().setVisible(true);
@@ -213,7 +232,25 @@ public class ExcluirFilme extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
-        
+     String codigo = IdFilme.getText();
+        String nome = ComboFilme.getSelectedItem().toString();
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO sql = new FilmeDAO(con);
+        Filme a = new Filme();
+        if (nome.equals("")) {
+            JOptionPane.showMessageDialog(null, "Não foi selecionado nenhum filme!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int b = JOptionPane.showConfirmDialog(null, "Deseja excluir?" + "\n" + codigo + " - " + nome + "", "Video Locadora", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (b == 0) {
+                int cod = Integer.parseInt(codigo);
+                a.setTitulo(nome);
+                a.setCodigo(cod);
+                sql.ExcluirFilme(a);
+                Conexao.FecharConexao(con);
+                new Menu().setVisible(true);
+                dispose();
+            }
+        }        
     }//GEN-LAST:event_deletarActionPerformed
 
     public static void main(String args[]) {
@@ -252,8 +289,8 @@ public class ExcluirFilme extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> WComboFilme;
-    private javax.swing.JTextField WIDFilme;
+    private javax.swing.JComboBox<String> ComboFilme;
+    private javax.swing.JTextField IdFilme;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton deletar;
     private javax.swing.JLabel jLabel2;

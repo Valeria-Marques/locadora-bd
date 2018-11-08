@@ -23,7 +23,6 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     CategoriaDAO sql = new CategoriaDAO(con);
     List<Categoria> lista = new ArrayList<>();
     lista =  sql.ListarComboCategoria();
-    ComboCategoria.addItem("");
     for(Categoria c : lista){
        ComboCategoria.addItem(c.getNome()); 
     }

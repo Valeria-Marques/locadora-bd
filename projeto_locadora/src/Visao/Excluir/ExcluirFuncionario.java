@@ -24,7 +24,6 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     FuncionarioDAO sql = new FuncionarioDAO(con);
     List<Funcionario> lista = new ArrayList<>();
     lista =  sql.ListarComboFuncionario();
-    ComboFuncionario.addItem("");
     for(Funcionario c : lista){
        ComboFuncionario.addItem(c.getNome()); 
     }
