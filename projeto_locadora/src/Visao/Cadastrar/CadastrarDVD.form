@@ -223,6 +223,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="Situacao">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Disponivel"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="SelecionaFilme">
           <Properties>

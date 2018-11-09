@@ -1,4 +1,4 @@
-package DAO;
+    package DAO;
 
 import Modelo.Filme;
 import java.sql.Connection;
@@ -179,7 +179,7 @@ public class FilmeDAO extends ExecuteSQL{
     }
 
     public List<Filme> CapturarFilme(int cod) {
-        String sql = "SELECT * FROM filme WHERE idfilme = " + cod + "";
+        String sql = "SELECT idfilme,titulo,ano,duracao,idcategoria,idclassificacao FROM filme WHERE idfilme = " + cod + "";
         List<Filme> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -194,7 +194,6 @@ public class FilmeDAO extends ExecuteSQL{
                     f.setDuracao(rs.getString(4));
                     f.setCodigoCategoria(rs.getInt(5));
                     f.setCodigoClassificacao(rs.getInt(6));
-                    f.setCapa(rs.getString(7));
                     lista.add(f);
                 }
                 return lista;
@@ -225,7 +224,7 @@ public class FilmeDAO extends ExecuteSQL{
     }
 
     public String AlterarFilme(Filme f) {
-        String sql = "UPDATE filme SET titulo = ?, ano = ?, duracao = ?, idcategoria = ?, idclassificacao = ?, capa = ? WHERE idfilme = ?";
+        String sql = "UPDATE filme SET titulo = ?, ano = ?, duracao = ?, idcategoria = ?, idclassificacao = ? WHERE idfilme = ?";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, f.getTitulo());
@@ -233,8 +232,7 @@ public class FilmeDAO extends ExecuteSQL{
             ps.setString(3, f.getDuracao());
             ps.setInt(4, f.getCodigoCategoria());
             ps.setInt(5, f.getCodigoClassificacao());
-            ps.setString(6, f.getCapa());
-            ps.setInt(7, f.getCodigo());
+            ps.setInt(6, f.getCodigo());
             
             if (ps.executeUpdate() > 0) {
                 return "Editado(a)!";

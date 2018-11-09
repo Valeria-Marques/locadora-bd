@@ -128,6 +128,8 @@ public class CadastrarDVD extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Situação");
 
+        Situacao.setText("Disponivel");
+
         SelecionaFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SelecionaFilmeActionPerformed(evt);

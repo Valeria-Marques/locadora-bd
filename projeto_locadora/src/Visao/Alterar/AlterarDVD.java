@@ -16,7 +16,7 @@ public class AlterarDVD extends javax.swing.JFrame {
         setSize(615,435);
         setTitle("Alterar DVD");
     }
- private void InserirDados(int cod) {
+ private void InserirDados(int cod){
         Connection con = Conexao.AbrirConexao();
         DVDDAO sql = new DVDDAO(con);
         List<DVD> lista = new ArrayList<>();
@@ -41,17 +41,17 @@ public class AlterarDVD extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        WCodigo = new javax.swing.JTextField();
+        Codigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         WSituacao = new javax.swing.JTextField();
         WCodigoFilme = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         WPrecoCompra = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        WDataCompra = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        WDataCompra = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -172,7 +172,7 @@ public class AlterarDVD extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(WDataCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(WDataCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -185,9 +185,9 @@ public class AlterarDVD extends javax.swing.JFrame {
                                 .addGap(17, 17, 17)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(WCodigo)
+                                .addComponent(Codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(WSituacao)
@@ -200,9 +200,9 @@ public class AlterarDVD extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(WCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -215,8 +215,8 @@ public class AlterarDVD extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(WPrecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(WDataCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+                    .addComponent(WDataCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49))
         );
 
         getContentPane().add(jPanel1);
@@ -226,17 +226,18 @@ public class AlterarDVD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String codigo = WCodigo.getText();
+        String codigo = Codigo.getText();
         Connection con = Conexao.AbrirConexao();
         DVDDAO sql = new DVDDAO(con);
         int cod = Integer.parseInt(codigo);
         if (sql.TestarDVD(cod) == false) {
             JOptionPane.showMessageDialog(null, "Informe um código!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
         }
-        if (codigo.equals("")) {
+        if (codigo.equals("")){
             JOptionPane.showMessageDialog(null, "O código não foi encontrado!", "Vidio Locadora", JOptionPane.WARNING_MESSAGE);
                 Conexao.FecharConexao(con);
         }
+        WCodigoFilme.setText("");
         WPrecoCompra.setText("");
         WDataCompra.setText("");
         WSituacao.setText("");
@@ -244,7 +245,7 @@ public class AlterarDVD extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-  int codigo = Integer.parseInt(WCodigo.getText());
+        int codigo = Integer.parseInt(Codigo.getText());
         int codigoFilme = Integer.parseInt(WCodigoFilme.getText());
         double preco = Double.parseDouble(WPrecoCompra.getText());
         String situacao = WSituacao.getText();
@@ -265,7 +266,7 @@ public class AlterarDVD extends javax.swing.JFrame {
             WPrecoCompra.setText("");
             WDataCompra.setText("");
             WSituacao.setText("");
-            WCodigo.setText("");
+            Codigo.setText("");
             WCodigoFilme.setText("");
             JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
             new Menu().setVisible(true);
@@ -279,10 +280,10 @@ public class AlterarDVD extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
- WPrecoCompra.setText("");
+        WPrecoCompra.setText("");
         WDataCompra.setText("");
         WSituacao.setText("");
-        WCodigo.setText("");
+        Codigo.setText("");
         WCodigoFilme.setText("");        
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -322,7 +323,7 @@ public class AlterarDVD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField WCodigo;
+    private javax.swing.JTextField Codigo;
     private javax.swing.JTextField WCodigoFilme;
     private javax.swing.JTextField WDataCompra;
     private javax.swing.JTextField WPrecoCompra;
