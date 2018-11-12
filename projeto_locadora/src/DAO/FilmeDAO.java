@@ -179,7 +179,7 @@ public class FilmeDAO extends ExecuteSQL{
     }
 
     public List<Filme> CapturarFilme(int cod) {
-        String sql = "SELECT idfilme,titulo,ano,duracao,idcategoria,idclassificacao FROM filme WHERE idfilme = " + cod + "";
+        String sql = "SELECT * FROM filme WHERE idfilme = " + cod;
         List<Filme> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -194,6 +194,7 @@ public class FilmeDAO extends ExecuteSQL{
                     f.setDuracao(rs.getString(4));
                     f.setCodigoCategoria(rs.getInt(5));
                     f.setCodigoClassificacao(rs.getInt(6));
+                    f.setCapa(rs.getString(7));
                     lista.add(f);
                 }
                 return lista;
@@ -208,7 +209,7 @@ public class FilmeDAO extends ExecuteSQL{
     public boolean TestarFilme(int cod) {
         boolean Resultado = false;
         try {
-            String sql = "SELECT * FROM filme WHERE idfilme = " + cod + "";
+            String sql = "SELECT * FROM filme WHERE idfilme = " + cod;
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
@@ -227,6 +228,7 @@ public class FilmeDAO extends ExecuteSQL{
         String sql = "UPDATE filme SET titulo = ?, ano = ?, duracao = ?, idcategoria = ?, idclassificacao = ? WHERE idfilme = ?";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
+
             ps.setString(1, f.getTitulo());
             ps.setInt(2, f.getAno());
             ps.setString(3, f.getDuracao());

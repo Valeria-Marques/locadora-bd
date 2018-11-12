@@ -92,7 +92,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
     }
 
     public List<Classificacao> ListarClassificacao() {
-        String sql = "SELECT idclassificacao, nome, preco FROM classificacao";
+        String sql = "SELECT idclassificacao, nomListare, preco FROM classificacao";
         List<Classificacao> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);

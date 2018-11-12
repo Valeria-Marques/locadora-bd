@@ -1,5 +1,6 @@
 package Locacao;
 
+import DAO.AlugueDAO;
 import DAO.ClienteDAO;
 import DAO.Conexao;
 import Modelo.Aluguel;
@@ -15,10 +16,59 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
     
     public ConsultaDevolucao() {
         initComponents();
+        AtualizaCombo();
         setResizable(false);
         setLocationRelativeTo(this);
         setTitle("Consultar Devolução");
     }
+    private void AtualizaCombo() {
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        lista = sql.ListarComboCliente();
+        for (Cliente b : lista) {
+            WCliente.addItem(b.getNome());
+        }
+        Conexao.FecharConexao(con);
+    }
+    
+    private void ConsultaCodigoCliente() {
+        Connection con = Conexao.AbrirConexao();
+        ClienteDAO sql = new ClienteDAO(con);
+        List<Cliente> lista = new ArrayList<>();
+        String nome = WCliente.getSelectedItem().toString();
+        lista = sql.ConsultaCodigoCliente(nome);
+        for (Cliente b : lista) {
+            int a = b.getCodigo();
+            AtualizaTable(a);
+        }
+        Conexao.FecharConexao(con);
+    }
+    
+    private void AtualizaTable(int cod) {
+        Connection con = Conexao.AbrirConexao();
+        AlugueDAO bd = new AlugueDAO(con);
+        List<Aluguel> lista = new ArrayList<>();
+        lista = bd.PesquisarCodigoCliente(cod);
+        DefaultTableModel tbm
+                = (DefaultTableModel) WTabela.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Aluguel tab : lista) {
+            tbm.addRow(new String[i]);
+            WTabela.setValueAt(tab.getCod(), i, 0);
+            WTabela.setValueAt(tab.getCodcliente(), i, 1);
+            WTabela.setValueAt(tab.getCoddvd(), i, 2);
+            WTabela.setValueAt(tab.getHorario(), i, 3);
+            WTabela.setValueAt(tab.getDataAluguel(), i, 4);
+            WTabela.setValueAt(tab.getDataDevolucao(), i, 5);
+            i++;
+        }
+        Conexao.FecharConexao(con);
+    }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,11 +185,19 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void WClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WClienteActionPerformed
-      
+   ConsultaCodigoCliente();      
     }//GEN-LAST:event_WClienteActionPerformed
 
     private void WTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_WTabelaMouseClicked
-   
+   Integer linha = WTabela.getSelectedRow();
+        Integer aluguel = (Integer) WTabela.getValueAt(linha, 0);
+        Integer cliente = (Integer) WTabela.getValueAt(linha, 1);
+        Integer dvd = (Integer) WTabela.getValueAt(linha, 2);
+        Listar a = new Listar();
+        a.setCodigoAluguel(aluguel);
+        a.setCodigoCliente(cliente);
+        a.setCodigoDVD(dvd);
+        new EfetuarDevolucao().setVisible(true);
     }//GEN-LAST:event_WTabelaMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -259,7 +259,7 @@ public class DVDDAO extends ExecuteSQL{
     public boolean TestarSituacao(int cod) {
         boolean Resultado = true;
         try {
-            String sql = "SELECT iddvd FROM dvd WHERE iddvd = " + cod + "ANDE situacao = 'Disponível'";
+            String sql = "SELECT iddvd FROM dvd WHERE iddvd = " + cod + "AND situacao = 'Disponível'";
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             

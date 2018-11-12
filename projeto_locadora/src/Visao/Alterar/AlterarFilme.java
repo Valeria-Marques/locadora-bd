@@ -19,7 +19,7 @@ public class AlterarFilme extends javax.swing.JFrame {
         initComponents();
         AtualizaComboCategoria();
         AtualizaComboClassificacao();
-         setSize(710,437);
+        setSize(710,437);
         setTitle("Alterar Filme");
         
     }
@@ -40,6 +40,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                 WDuracao.setText("" + a.getDuracao());
                 WIDCategoria.setText("" + a.getCodigoCategoria());
                 WIDClassificacao.setText("" + a.getCodigoClassificacao());
+                
             }
             Conexao.FecharConexao(con);
         }
@@ -79,7 +80,7 @@ public class AlterarFilme extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Cancelar = new javax.swing.JButton();
-        cadastrar = new javax.swing.JButton();
+        alterar = new javax.swing.JButton();
         limpar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
@@ -173,11 +174,11 @@ public class AlterarFilme extends javax.swing.JFrame {
             }
         });
 
-        cadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cadastrar.setText("Alterar");
-        cadastrar.addActionListener(new java.awt.event.ActionListener() {
+        alterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarActionPerformed(evt);
+                alterarActionPerformed(evt);
             }
         });
 
@@ -197,7 +198,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -208,7 +209,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(34, Short.MAX_VALUE))
@@ -321,7 +322,6 @@ public class AlterarFilme extends javax.swing.JFrame {
                             .addComponent(CodigoPegar)
                             .addGap(18, 18, 18)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(Codigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(WIDClassificacao)
@@ -336,8 +336,9 @@ public class AlterarFilme extends javax.swing.JFrame {
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(WDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addComponent(WComboClassificacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(0, 13, Short.MAX_VALUE)))
+                                .addComponent(WComboClassificacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Codigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(WTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
@@ -384,11 +385,12 @@ public class AlterarFilme extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
-        String titulo = WTitulo.getText();
-        String duracao = WDuracao.getText();
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+      
         String codigo = Codigo.getText();
+        String titulo = WTitulo.getText();
         String anoo = WAno.getText();
+        String duracao = WDuracao.getText();
         String Categoria = WIDCategoria.getText();
         String Classificacao = WIDClassificacao.getText();
         if (titulo.equals("") || anoo.equals("") || duracao.equals("") || Categoria.equals("")
@@ -397,24 +399,29 @@ public class AlterarFilme extends javax.swing.JFrame {
         } else {
             Connection con = Conexao.AbrirConexao();
             FilmeDAO sql = new FilmeDAO(con);
+            
             int cod = Integer.parseInt(codigo);
             int categoria = Integer.parseInt(Categoria);
             int classificacao = Integer.parseInt(Classificacao);
             int ano = Integer.parseInt(anoo);
             Filme a = new Filme();
             a.setCodigo(cod);
-            a.setCodigoCategoria(categoria);
-            a.setCodigoClassificacao(classificacao);
+            a.setTitulo(titulo);
             a.setAno(ano);
             a.setDuracao(duracao);
-            a.setTitulo(titulo);
+            a.setCodigoCategoria(categoria);
+            a.setCodigoClassificacao(classificacao);  
+            
+                      
+            
             sql.AlterarFilme(a);
             Conexao.FecharConexao(con);
-            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
-            new Menu().setVisible(true);
+            
+//            JOptionPane.showMessageDialog(null, "Alteração concluida!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            //new Menu().setVisible(true);
         }
-        dispose();
-    }//GEN-LAST:event_cadastrarActionPerformed
+        //dispose();
+    }//GEN-LAST:event_alterarActionPerformed
 
     private void WComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WComboCategoriaActionPerformed
 Connection con = Conexao.AbrirConexao();
@@ -533,7 +540,7 @@ Connection con = Conexao.AbrirConexao();
     private javax.swing.JTextField WIDCategoria;
     private javax.swing.JTextField WIDClassificacao;
     private javax.swing.JTextField WTitulo;
-    private javax.swing.JButton cadastrar;
+    private javax.swing.JButton alterar;
     private javax.swing.JTextField codg1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
