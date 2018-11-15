@@ -114,6 +114,7 @@ public class ClassificacaoDAO extends ExecuteSQL{
             return null;
         }
     }
+    
 
     public List<Classificacao> PesquisarNomeClassificacao(String C) {
         String sql = "SELECT idclassificacao, nome, preco FROM classificacao WHERE nome LIKE'" + C + "%'";
@@ -244,6 +245,41 @@ public class ClassificacaoDAO extends ExecuteSQL{
         } catch (SQLException e) {
             return null;
         }
+    }
+
+   public List<Classificacao> ListarPrecoClassificacao(int cod) {
+        
+        String sql = "SELECT idclassificacao, preco FROM classificacao WHERE idclassificacao = '"+cod+"'";
+        List<Classificacao> lista = new ArrayList<>();
+
+        try {
+
+            PreparedStatement ps = (PreparedStatement) getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+
+                while (rs.next()) {                   
+
+                    Classificacao a = new Classificacao();
+                    a.setPreco(rs.getDouble(1));
+                    lista.add(a);
+                }
+
+                return lista;
+
+            } else {
+
+                return null;
+
+            }
+
+        } catch (SQLException e) {
+
+            return null;
+
+        }
+        
     }
   
 }

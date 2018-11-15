@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 22-Out-2018 às 23:44
+-- Generation Time: 15-Nov-2018 às 22:15
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -37,6 +37,13 @@ CREATE TABLE `aluguel` (
   `data_devolucao` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `aluguel`
+--
+
+INSERT INTO `aluguel` (`idaluguel`, `iddvd`, `idcliente`, `hora_aluguel`, `data_aluguel`, `data_devolucao`) VALUES
+(1, 1, 1, '14 : 52', '15/11/2018', '09/11/2018');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +55,14 @@ CREATE TABLE `categoria` (
   `nome` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `categoria`
+--
+
+INSERT INTO `categoria` (`idcategoria`, `nome`) VALUES
+(1, 'Testando 1'),
+(2, 'testando');
+
 -- --------------------------------------------------------
 
 --
@@ -56,9 +71,17 @@ CREATE TABLE `categoria` (
 
 CREATE TABLE `classificacao` (
   `idclassificacao` int(11) NOT NULL,
-  `nome` varchar(20) NOT NULL,
+  `nome` varchar(30) NOT NULL,
   `preco` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `classificacao`
+--
+
+INSERT INTO `classificacao` (`idclassificacao`, `nome`, `preco`) VALUES
+(1, 'Testando', 200),
+(2, 'testando', 200);
 
 -- --------------------------------------------------------
 
@@ -69,7 +92,7 @@ CREATE TABLE `classificacao` (
 CREATE TABLE `cliente` (
   `idcliente` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `data_nasc` varchar(10) NOT NULL,
+  `data_nasc` varchar(100) NOT NULL,
   `rg` varchar(20) DEFAULT NULL,
   `cpf` varchar(20) DEFAULT NULL,
   `email` varchar(80) DEFAULT NULL,
@@ -79,6 +102,14 @@ CREATE TABLE `cliente` (
   `numero` int(11) NOT NULL,
   `cep` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `cliente`
+--
+
+INSERT INTO `cliente` (`idcliente`, `nome`, `data_nasc`, `rg`, `cpf`, `email`, `telefone`, `bairro`, `rua`, `numero`, `cep`) VALUES
+(1, 'Valeria', '12/34/5678', '12345678765432', '123.456.789-87', 'valeria@gmail.com', '(12)34567-7654', '12345678765432', 'Testando', 23, '12345-677'),
+(2, 'Valeria', '12/34/5678', '1234567876543', '234.567.876-54', 'valeria@gmail.com', '(12)3-4567-8876', 'Testando', 'Testando', 22, '14568-765');
 
 -- --------------------------------------------------------
 
@@ -94,6 +125,14 @@ CREATE TABLE `dvd` (
   `situacao` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `dvd`
+--
+
+INSERT INTO `dvd` (`iddvd`, `idfilme`, `preco_compra`, `data_compra`, `situacao`) VALUES
+(1, 3, 200, '12232345', 'Alugado'),
+(4, 3, 200, '12/34/5676', 'Disponivel');
+
 -- --------------------------------------------------------
 
 --
@@ -106,9 +145,15 @@ CREATE TABLE `filme` (
   `ano` int(11) DEFAULT NULL,
   `duracao` varchar(10) DEFAULT NULL,
   `idcategoria` int(11) NOT NULL,
-  `idclassificacao` int(11) NOT NULL,
-  `capa` varchar(80) DEFAULT NULL
+  `idclassificacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `filme`
+--
+
+INSERT INTO `filme` (`idfilme`, `titulo`, `ano`, `duracao`, `idcategoria`, `idclassificacao`) VALUES
+(3, 'Ndd', 2001, '23', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -128,7 +173,8 @@ CREATE TABLE `funcionario` (
 --
 
 INSERT INTO `funcionario` (`idfuncionario`, `nome`, `login`, `senha`) VALUES
-(1, 'Administrador', 'qwe', '123');
+(1, 'administrador', 'qwe', '123'),
+(2, 'Valeria', 'valeria', '123');
 
 --
 -- Indexes for dumped tables
@@ -189,43 +235,43 @@ ALTER TABLE `funcionario`
 -- AUTO_INCREMENT for table `aluguel`
 --
 ALTER TABLE `aluguel`
-  MODIFY `idaluguel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idaluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `classificacao`
 --
 ALTER TABLE `classificacao`
-  MODIFY `idclassificacao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idclassificacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `dvd`
 --
 ALTER TABLE `dvd`
-  MODIFY `iddvd` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `iddvd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `filme`
 --
 ALTER TABLE `filme`
-  MODIFY `idfilme` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idfilme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `funcionario`
 --
 ALTER TABLE `funcionario`
-  MODIFY `idfuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idfuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
